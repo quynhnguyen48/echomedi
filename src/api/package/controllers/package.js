@@ -12,6 +12,7 @@ module.exports = createCoreController('api::package.package',
             const { slug } = ctx.params;
             var pkg = await strapi.db.query('api::package.package').findOne({
                 populate: {
+                    hero_img: true,
                     sub_packages: {
                         populate: {
                             image: true,
