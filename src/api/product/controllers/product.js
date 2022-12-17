@@ -13,7 +13,11 @@ module.exports = createCoreController('api::product.product',
             var product = await strapi.db.query('api::product.product').findOne({
                 populate: {
                     image: true,
-                    medicines: true,
+                    medicines: {
+                        populate: {
+                            image: true,
+                        }
+                    },
                 },
                 where: {
                     slug
