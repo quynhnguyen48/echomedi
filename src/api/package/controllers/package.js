@@ -309,6 +309,7 @@ module.exports = createCoreController('api::package.package',
                 user: {},
               }
             );
+          return {ok: true}
       },
         async sendEmail(ctx) {
               const t = `<!DOCTYPE html>
