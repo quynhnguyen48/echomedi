@@ -9,5 +9,23 @@ module.exports = {
           prefix: false,
         },
       },
+      {
+        method: "POST",
+        path: "/packages/send_email",
+        handler: "package.sendEmail",
+        config: {
+          policies: [],
+          prefix: false,
+        }
+      },
+      {
+        method: "POST",
+        path: "/packages/contact",
+        handler: "package.contact",
+        config: {
+          policies: [],
+          prefix: false,
+        }
+      }
     ]
 }  
