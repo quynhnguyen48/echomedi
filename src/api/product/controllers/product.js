@@ -65,7 +65,11 @@ module.exports = createCoreController('api::product.product',
                     where: { users_permissions_user: user.id }, populate: {
                         cart_lines: {
                             populate: {
-                                product: true,
+                                product: {
+                                    populate: {
+                                        image: true,
+                                    }
+                                }
                             }
                         }
                     }
