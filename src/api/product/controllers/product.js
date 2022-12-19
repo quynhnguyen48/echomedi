@@ -33,9 +33,19 @@ module.exports = createCoreController('api::product.product',
             const us = await strapi
                 .query('plugin::users-permissions.user')
                 .findOne({ where: { id: user.id }, populate: { cart: true } });
+            const cart = await strapi
+            .query('api::cart.cart')
+            .findOne({
+                where: { users_permissions_user: user.id }, populate: {
+                    cart_lines: {
+                        populate: {
+                            product: true,
+                        }
+                    }
+                }
+            });
 
-            let cart = user.cart;
-            if (!user.cart) {
+            if (!cart) {
                 cart = await strapi
                     .query('api::cart.cart')
                     .create({ data: { users_permissions_user: user.id, publishedAt: new Date().toISOString() } });
