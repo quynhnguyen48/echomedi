@@ -9,5 +9,23 @@ module.exports = {
           prefix: false,
         },
       },
+      {
+        method: "POST",
+        path: "/product/addProductToCart",
+        handler: "product.addProductToCart",
+        config: {
+          policies: [],
+          prefix: false,
+        },
+      },
+      {
+        method: "GET",
+        path: "/product/getCart",
+        handler: "product.getCart",
+        config: {
+          policies: [],
+          prefix: false,
+        },
+      }
     ]
 }  

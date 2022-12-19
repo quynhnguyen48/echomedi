@@ -65,6 +65,12 @@
     "slug": {
       "type": "uid",
       "targetField": "label"
+    },
+    "carts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::cart.cart",
+      "mappedBy": "products"
     }
   }
 }
