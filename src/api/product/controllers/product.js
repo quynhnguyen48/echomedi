@@ -38,7 +38,7 @@ module.exports = createCoreController('api::product.product',
             if (!user.cart) {
                 cart = await strapi
                     .query('api::cart.cart')
-                    .create({data: {users_permissions_user: id, publishedAt: new Date().toISOString() }});
+                    .create({data: {users_permissions_user: user.id, publishedAt: new Date().toISOString() }});
             }
 
             await strapi
