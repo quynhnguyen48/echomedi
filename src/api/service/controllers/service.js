@@ -11,6 +11,9 @@ module.exports = createCoreController('api::service.service',
         async findOne(ctx) {
             const { slug } = ctx.params;
             var svc = await strapi.db.query('api::service.service').findOne({
+                populate: {
+                    image: true,
+                },
                 where: {
                     slug
                 }
