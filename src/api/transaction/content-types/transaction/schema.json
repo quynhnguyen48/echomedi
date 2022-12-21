@@ -1,0 +1,106 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "singularName": "transaction",
+    "pluralName": "transactions",
+    "displayName": "Transaction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "amount": {
+      "type": "biginteger"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "income",
+        "expense"
+      ]
+    },
+    "paymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "cash",
+        "bankTransfer",
+        "visa",
+        "mastercard",
+        "member-card",
+        "service-card"
+      ]
+    },
+    "billingType": {
+      "type": "enumeration",
+      "enum": [
+        "member-card",
+        "service-card",
+        "treatment",
+        "order",
+        "product",
+        "debt-collection",
+        "card-canceled"
+      ]
+    },
+    "note": {
+      "type": "string"
+    },
+    "discount": {
+      "type": "biginteger"
+    },
+    "vat": {
+      "type": "float"
+    },
+    "subTotal": {
+      "type": "biginteger"
+    },
+    "total": {
+      "type": "biginteger"
+    },
+    "change": {
+      "type": "biginteger"
+    },
+    "debtBalance": {
+      "type": "biginteger"
+    },
+    "code": {
+      "type": "string"
+    },
+    "serviceCardUsaged": {
+      "type": "integer"
+    },
+    "serviceCardLimit": {
+      "type": "integer"
+    },
+    "purchase": {
+      "type": "biginteger"
+    },
+    "interestMoney": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "new",
+        "progress",
+        "done",
+        "paid",
+        "confirmed"
+      ],
+      "default": "new"
+    },
+    "startedTreatmentAt": {
+      "type": "datetime"
+    },
+    "endedTreatmentAt": {
+      "type": "datetime"
+    },
+    "products": {
+      "type": "json"
+    }
+  }
+}
