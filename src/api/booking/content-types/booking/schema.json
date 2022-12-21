@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "timeSession": {
+      "type": "string"
+    },
+    "contactReceiver": {
+      "type": "string"
+    },
+    "contactPhoneNumber": {
+      "type": "string"
+    },
+    "contactEmail": {
+      "type": "string"
+    },
+    "contactAddress": {
+      "type": "json"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "scheduled",
+        "confirmed",
+        "cancelled"
+      ]
+    },
+    "note": {
+      "type": "text"
+    },
+    "callToRemind": {
+      "type": "boolean",
+      "default": false
+    },
+    "bookingDate": {
+      "type": "datetime"
+    },
+    "code": {
+      "type": "string"
+    },
+    "createdByAdmin": {
+      "type": "boolean"
+    },
+    "scheduleTreatmentTimes": {
+      "type": "integer"
+    },
+    "treatmentTime": {
+      "type": "integer"
+    }
+  }
+}
