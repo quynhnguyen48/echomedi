@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "membership_cards",
+  "info": {
+    "singularName": "membership-card",
+    "pluralName": "membership-cards",
+    "displayName": "Card",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "code": {
+      "type": "string"
+    },
+    "remainValue": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "active",
+        "suspended",
+        "completed"
+      ],
+      "default": "active"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "member-card",
+        "service-card"
+      ]
+    },
+    "usageLimit": {
+      "type": "integer"
+    },
+    "lastUsedAt": {
+      "type": "datetime"
+    },
+    "expiredDate": {
+      "type": "date"
+    }
+  }
+}
