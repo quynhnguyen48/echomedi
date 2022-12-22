@@ -1,0 +1,78 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "orderedDate": {
+      "type": "datetime"
+    },
+    "contactReceiver": {
+      "type": "string"
+    },
+    "contactPhoneNumber": {
+      "type": "string"
+    },
+    "contactEmail": {
+      "type": "string"
+    },
+    "contactAddress": {
+      "type": "json"
+    },
+    "subTotal": {
+      "type": "biginteger"
+    },
+    "promotion": {
+      "type": "biginteger"
+    },
+    "shippingFee": {
+      "type": "biginteger"
+    },
+    "tax": {
+      "type": "integer"
+    },
+    "total": {
+      "type": "biginteger"
+    },
+    "products": {
+      "type": "json"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "ordered",
+        "done",
+        "canceled"
+      ],
+      "default": "ordered"
+    },
+    "dynamicLink": {
+      "type": "string"
+    }
+  }
+}
