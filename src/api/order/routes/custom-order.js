@@ -18,5 +18,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "GET",
+      path: "/orders/getOrderDetail/:id",
+      handler: "order.getOrderDetail",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };

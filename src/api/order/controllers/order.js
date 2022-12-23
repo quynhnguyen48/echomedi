@@ -14,13 +14,42 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var { query } = ctx.request.body;
     return strapi.query("api::order.order").count({ where: query });
   },
-  async createOrder(ctx) {
-    console.log('test', ctx.state.user);
+  async getOrderDetail(ctx) {
     if (!ctx.state.user) {
       throw new ApplicationError('You must be authenticated to reset your password');
     }
-    
-    console.log('test1');
+
+    const { id } = ctx.params;
+    var product = await strapi.db.query('api::order.order').findOne({
+      populate: {
+          cart: {
+            populate: {
+              cart_lines: {
+                populate: {
+                  product: true
+                }
+              },
+            }
+          },
+          medicines: {
+              populate: {
+                  image: true,
+              }
+          },
+      },
+      where: {
+          id
+      }
+  });
+
+  return {
+      product,
+  };
+  },
+  async createOrder(ctx) {
+    if (!ctx.state.user) {
+      throw new ApplicationError('You must be authenticated to reset your password');
+    }
 
     const { id } = ctx.state.user;
     const user = await strapi
@@ -31,7 +60,6 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     if (!user.cart) {
       throw new ApplicationError("You don't have any item in cart.");
     }
-    console.log('test2');
 
     let result = await strapi.query('api::cart.cart').findOne({ where: { id: cart.id }, 
       populate: 
@@ -55,7 +83,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         cart: cart.id, 
         users_permissions_user: id, 
         publishedAt: new Date().toISOString(),
-        total: totalPrice
+        total: totalPrice,
+        num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
        } });
       
 
