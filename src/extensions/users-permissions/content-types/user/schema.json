@@ -68,6 +68,18 @@
       "relation": "oneToOne",
       "target": "api::cart.cart",
       "inversedBy": "users_permissions_user"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "check_ins": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::check-in.check-in",
+      "mappedBy": "user"
     }
   }
 }

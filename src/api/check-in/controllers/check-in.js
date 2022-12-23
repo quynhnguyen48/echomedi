@@ -41,7 +41,7 @@ module.exports = createCoreController(
 
         const user = await strapi
           .query("plugin::users-permissions.user")
-          .findOne({ where: { code: cameraData.aliasID } });
+          .findOne({ where: { id: cameraData.aliasID } });
         if (checkedinToday) {
           await strapi.entityService.update(
             "api::check-in.check-in",
@@ -148,7 +148,7 @@ module.exports = createCoreController(
 
           const user = await strapi
             .query("plugin::users-permissions.user")
-            .findOne({ where: { code: payload.aliasID } });
+            .findOne({ where: { id: payload.aliasID } });
 
           const checkInData = await strapi.entityService.findOne(
             "api::check-in.check-in",

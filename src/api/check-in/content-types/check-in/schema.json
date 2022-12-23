@@ -31,6 +31,12 @@
         "confirmed"
       ],
       "default": "waiting"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "check_ins"
     }
   }
 }
