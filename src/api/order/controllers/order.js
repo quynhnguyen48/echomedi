@@ -55,6 +55,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         cart: cart.id, 
         users_permissions_user: id, 
         publishedAt: new Date().toISOString(),
+        total: totalPrice
        } });
       
 
