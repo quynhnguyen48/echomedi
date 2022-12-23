@@ -30,10 +30,7 @@ module.exports = createCoreController('api::product.product',
         },
         async addProductToCart(ctx) {
             const { user } = ctx.state;
-            const us = await strapi
-                .query('plugin::users-permissions.user')
-                .findOne({ where: { id: user.id }, populate: { cart: true } });
-            const cart = await strapi
+            let cart = await strapi
             .query('api::cart.cart')
             .findOne({
                 where: { users_permissions_user: user.id }, populate: {
