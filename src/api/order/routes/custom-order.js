@@ -9,5 +9,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/orders/createOrder",
+      handler: "order.createOrder",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };

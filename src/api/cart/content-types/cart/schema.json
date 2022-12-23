@@ -21,13 +21,20 @@
     "users_permissions_user": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "cart"
     },
     "cart_lines": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::cart-line.cart-line",
       "mappedBy": "cart"
+    },
+    "order": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::order.order",
+      "inversedBy": "cart"
     }
   }
 }
