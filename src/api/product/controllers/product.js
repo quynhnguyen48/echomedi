@@ -170,6 +170,12 @@ module.exports = createCoreController('api::product.product',
                     var td1 = document.createElement("td");
                     td1.innerHTML = b.attributes.label;
                     tr.append(td1);
+                    var td2 = document.createElement("td");
+                    td2.innerHTML = "";
+                    tr.append(td2);
+                    var td3 = document.createElement("td");
+                    td3.innerHTML = b.attributes.price;
+                    tr.append(td3);
                     a.append(tr);
 
                     var medical_services = b.attributes.medical_services;
