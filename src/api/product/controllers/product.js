@@ -197,8 +197,8 @@ module.exports = createCoreController('api::product.product',
                         tr.append(td3);
                         a.append(tr);
                     })
-
-                    var tr = document.createElement("tr");
+                })
+                var tr = document.createElement("tr");
                     var td1 = document.createElement("td");
                     td1.innerHTML = "";
                     tr.append(td1);
@@ -210,7 +210,6 @@ module.exports = createCoreController('api::product.product',
                     td3.className = "bold";
                     tr.append(td3);
                     a.append(tr);
-                })
             }, services, order.bundle_services.toString());
 
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
