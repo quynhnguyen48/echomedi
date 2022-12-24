@@ -149,6 +149,7 @@ module.exports = createCoreController('api::product.product',
 
 
             await page.evaluate((services, bs) => {
+                let total = 0;
                 let tableContainer = document.getElementById('table-container');
                 let bundle_services = JSON.parse(bs);
                 var a = document.getElementById('table');
@@ -160,6 +161,7 @@ module.exports = createCoreController('api::product.product',
                     td2.innerHTML = s.attributes.group_service;
                     var td3 = document.createElement("td");
                     td3.innerHTML = s.attributes.price;
+                    total += s.attributes.price;
                     tr.append(td1);
                     tr.append(td2);
                     tr.append(td3);
@@ -176,6 +178,7 @@ module.exports = createCoreController('api::product.product',
                     tr.append(td2);
                     var td3 = document.createElement("td");
                     td3.innerHTML = b.attributes.price;
+                    total += b.attributes.price;
                     tr.append(td3);
                     a.append(tr);
 
@@ -194,6 +197,19 @@ module.exports = createCoreController('api::product.product',
                         tr.append(td3);
                         a.append(tr);
                     })
+
+                    var tr = document.createElement("tr");
+                    var td1 = document.createElement("td");
+                    td1.innerHTML = "";
+                    tr.append(td1);
+                    var td2 = document.createElement("td");
+                    td2.innerHTML = "";
+                    tr.append(td2);
+                    var td3 = document.createElement("td");
+                    td3.innerHTML = total;
+                    td3.className = "bold";
+                    tr.append(td3);
+                    a.append(tr);
                 })
             }, services, order.bundle_services.toString());
 
