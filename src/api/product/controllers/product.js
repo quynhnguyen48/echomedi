@@ -93,10 +93,10 @@ module.exports = createCoreController('api::product.product',
             })
 
 
-            // or a .pdf file
-            await page.pdf({
-                path: `/Users/quynhnguyen/Documents/my-fance-invoice.pdf`
-            });
+            // // or a .pdf file
+            // await page.pdf({
+            //     path: `/Users/quynhnguyen/Documents/my-fance-invoice.pdf`
+            // });
 
             var a = await page.createPDFStream();
 
