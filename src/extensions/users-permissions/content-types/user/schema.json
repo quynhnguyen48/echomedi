@@ -80,6 +80,15 @@
       "relation": "oneToMany",
       "target": "api::check-in.check-in",
       "mappedBy": "user"
+    },
+    "code": {
+      "type": "string"
+    },
+    "bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::booking.booking",
+      "mappedBy": "user"
     }
   }
 }

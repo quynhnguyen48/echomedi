@@ -84,6 +84,14 @@
       "relation": "oneToOne",
       "target": "api::cart.cart",
       "inversedBy": "order"
+    },
+    "cart1": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cart.cart"
+    },
+    "num_of_prod": {
+      "type": "integer"
     }
   }
 }

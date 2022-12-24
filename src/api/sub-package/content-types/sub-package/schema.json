@@ -10,19 +10,11 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "label": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "image": {
       "type": "media",
@@ -34,11 +26,7 @@
         "videos",
         "audios"
       ],
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "package": {
       "type": "relation",
@@ -51,6 +39,10 @@
       "relation": "oneToMany",
       "target": "api::service.service",
       "mappedBy": "sub_package"
+    },
+    "en_label": {
+      "pluginOptions": {},
+      "type": "string"
     }
   }
 }

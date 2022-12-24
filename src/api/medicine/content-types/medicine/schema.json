@@ -4,7 +4,8 @@
   "info": {
     "singularName": "medicine",
     "pluralName": "medicines",
-    "displayName": "Medicine"
+    "displayName": "Medicine",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,14 +16,15 @@
       "type": "string"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "desc": {
       "type": "richtext"
@@ -32,6 +34,18 @@
       "relation": "manyToMany",
       "target": "api::product.product",
       "mappedBy": "medicines"
+    },
+    "en_products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "en_medicines"
+    },
+    "en_label": {
+      "type": "string"
+    },
+    "en_desc": {
+      "type": "richtext"
     }
   }
 }

@@ -10,19 +10,11 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "label": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "slug": {
       "type": "uid",
@@ -30,27 +22,15 @@
     },
     "desc": {
       "type": "text",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "price": {
       "type": "biginteger",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "detail": {
       "type": "richtext",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     },
     "sub_package": {
       "type": "relation",
@@ -59,28 +39,28 @@
       "inversedBy": "services"
     },
     "show_price": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "boolean"
     },
     "show_buy_btn": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "boolean"
     },
     "show_learn_more": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "boolean"
+    },
+    "en_label": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "en_desc": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "en_detail": {
+      "pluginOptions": {},
+      "type": "richtext"
     }
   }
 }

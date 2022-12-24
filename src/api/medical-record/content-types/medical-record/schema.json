@@ -1,0 +1,63 @@
+{
+  "kind": "collectionType",
+  "collectionName": "medical_records",
+  "info": {
+    "singularName": "medical-record",
+    "pluralName": "medical-records",
+    "displayName": "Medical Record",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "circuit": {
+      "type": "integer"
+    },
+    "temperature": {
+      "type": "decimal"
+    },
+    "blood_pressure": {
+      "type": "decimal"
+    },
+    "respiratory_rate": {
+      "type": "decimal"
+    },
+    "height": {
+      "type": "decimal"
+    },
+    "weight": {
+      "type": "decimal"
+    },
+    "bmi": {
+      "type": "decimal"
+    },
+    "spo2": {
+      "type": "decimal"
+    },
+    "reasons_to_get_hospitalized": {
+      "type": "string"
+    },
+    "diagnose": {
+      "type": "string"
+    },
+    "treatment_regimen": {
+      "type": "string"
+    },
+    "examination": {
+      "type": "string"
+    },
+    "inquiry": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "services": {
+      "type": "json"
+    }
+  }
+}

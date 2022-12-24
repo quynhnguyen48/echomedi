@@ -22,13 +22,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "cart"
+      "mappedBy": "cart"
     },
     "cart_lines": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::cart-line.cart-line",
       "mappedBy": "cart"
+    },
+    "text": {
+      "type": "string"
     },
     "order": {
       "type": "relation",
