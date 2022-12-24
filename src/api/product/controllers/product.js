@@ -150,6 +150,7 @@ module.exports = createCoreController('api::product.product',
 
             await page.evaluate((services, bs) => {
                 let total = 0;
+                let cnt = 0;
                 let tableContainer = document.getElementById('table-container');
                 let bundle_services = JSON.parse(bs);
                 var a = document.getElementById('table');
@@ -163,8 +164,8 @@ module.exports = createCoreController('api::product.product',
                     td3.innerHTML = s.attributes.price;
                     total += s.attributes.price;
                     tr.append(td1);
-                    tr.append(td2);
-                    tr.append(td3);
+                    cnt++;
+                    if (cnt % 50 == 0) tr.className = "page-break-after-el";
                     a.append(tr);
                 });
                 bundle_services.forEach(b => {
@@ -180,6 +181,8 @@ module.exports = createCoreController('api::product.product',
                     td3.innerHTML = b.attributes.price;
                     total += b.attributes.price;
                     tr.append(td3);
+                    cnt++;
+                    if (cnt % 50 == 0) tr.className = "page-break-after-el";
                     a.append(tr);
 
                     var medical_services = b.attributes.medical_services;
@@ -195,6 +198,8 @@ module.exports = createCoreController('api::product.product',
                         tr.append(td1);
                         tr.append(td2);
                         tr.append(td3);
+                        cnt ++;
+                        if (cnt % 50 == 0) tr.className = "page-break-after-el";
                         a.append(tr);
                     })
                 })
@@ -209,6 +214,8 @@ module.exports = createCoreController('api::product.product',
                     td3.innerHTML = total;
                     td3.className = "bold";
                     tr.append(td3);
+                    cnt ++;
+                    if (cnt % 50 == 0) tr.className = "page-break-after-el";
                     a.append(tr);
             }, services, order.bundle_services.toString());
 
