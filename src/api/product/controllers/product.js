@@ -290,8 +290,10 @@ module.exports = createCoreController('api::product.product',
 
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
-            ctx.send(a)
-
-            browser.close();
+            page.close().then(() => {
+                browser.close().then(() => {
+                    ctx.send(a);
+                });
+            });
         }
     }));
