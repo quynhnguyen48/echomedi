@@ -187,7 +187,7 @@ module.exports = createCoreController('api::product.product',
                         var td2 = document.createElement("td");
                         td2.innerHTML = ms.attributes.group_service;
                         var td3 = document.createElement("td");
-                        td3.innerHTML = ms.attributes.price;
+                        td3.innerHTML = "";
                         tr.append(td1);
                         tr.append(td2);
                         tr.append(td3);
