@@ -117,6 +117,7 @@ module.exports = createCoreController('api::product.product',
                 .findOne({where: {id: ctx.request.body.id}});
 
             let services = JSON.parse(order.services);
+            // let bundle_services = JSON.parse(order.bundle_services);
 
             // create a new page
             const page = await browser.newPage();
@@ -137,7 +138,18 @@ module.exports = createCoreController('api::product.product',
                 waitUntil: 'networkidle0'
             });
 
-            await page.evaluate((services) => {
+            console.log('bundle_services', order.bundle_services)
+
+            page.on('console', async (msg) => {
+                const msgArgs = msg.args();
+                for (let i = 0; i < msgArgs.length; ++i) {
+                  console.log(await msgArgs[i].jsonValue());
+                }
+              });
+              
+
+            await page.evaluate((services, bs) => {
+                let bundle_services = JSON.parse(bs);
                 var a = document.getElementById('table');
                 services.forEach(s => {
                     var tr = document.createElement("tr");
@@ -152,7 +164,30 @@ module.exports = createCoreController('api::product.product',
                     tr.append(td3);
                     a.append(tr);
                 });
-            }, services);
+                bundle_services.forEach(b => {
+                    var tr = document.createElement("tr");
+                    var td1 = document.createElement("td");
+                    td1.innerHTML = b.attributes.label;
+                    tr.append(td1);
+                    a.append(tr);
+
+                    var medical_services = b.attributes.medical_services;
+
+                    medical_services.data.forEach(ms => {
+                        var tr = document.createElement("tr");
+                        var td1 = document.createElement("td");
+                        td1.innerHTML = ms.attributes.label;
+                        var td2 = document.createElement("td");
+                        td2.innerHTML = ms.attributes.group_service;
+                        var td3 = document.createElement("td");
+                        td3.innerHTML = ms.attributes.price;
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        a.append(tr);
+                    })
+                })
+            }, services, order.bundle_services.toString());
 
             var a = await page.createPDFStream();
 
