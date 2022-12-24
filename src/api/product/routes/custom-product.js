@@ -26,6 +26,15 @@ module.exports = {
           policies: [],
           prefix: false,
         },
+      },
+      {
+        method: "POST",
+        path: "/product/generatePDF",
+        handler: "product.generatePDF",
+        config: {
+          policies: [],
+          prefix: false,
+        },
       }
     ]
 }  
