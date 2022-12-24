@@ -169,6 +169,7 @@ module.exports = createCoreController('api::product.product',
                     var tr = document.createElement("tr");
                     var td1 = document.createElement("td");
                     td1.innerHTML = b.attributes.label;
+                    td1.className = "bold";
                     tr.append(td1);
                     var td2 = document.createElement("td");
                     td2.innerHTML = "";
