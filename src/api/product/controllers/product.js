@@ -104,6 +104,8 @@ module.exports = createCoreController('api::product.product',
             var a = await page.createPDFStream();
 
             ctx.send(a)
+
+            browser.close();
         },
         async generatePhieuCLS(ctx) {
             const browser = await puppeteer.launch({
@@ -192,6 +194,7 @@ module.exports = createCoreController('api::product.product',
 
             ctx.send(a);
             // page.close();
+            browser.close();
         },
         async generatePhieuChiDinh(ctx) {
             const browser = await puppeteer.launch({
@@ -288,5 +291,7 @@ module.exports = createCoreController('api::product.product',
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
             ctx.send(a)
+
+            browser.close();
         }
     }));
