@@ -187,7 +187,7 @@ module.exports = createCoreController('api::product.product',
                 })
             }, services, order.bundle_services.toString());
 
-            var a = await page.createPDFStream({printBackground: true, width: "775px"});
+            var a = await page.createPDFStream({printBackground: true, width: "775px", height: "1100px"});
 
             ctx.send(a)
         },
