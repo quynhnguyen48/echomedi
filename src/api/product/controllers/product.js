@@ -193,8 +193,17 @@ module.exports = createCoreController('api::product.product',
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
             ctx.send(a);
-            // page.close();
-            browser.close();
+            a.on('close', async () => {
+                try {
+                    console.log('end')
+                    await page.close();
+                    console.log('end1')
+                    await browser.close();
+                    console.log('end2')
+                } catch (e) {
+
+                }
+            });
         },
         async generatePhieuChiDinh(ctx) {
             const browser = await puppeteer.launch({
@@ -289,11 +298,17 @@ module.exports = createCoreController('api::product.product',
             }, groupByCategory);
 
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
-            await ctx.send(a);
+            ctx.send(a);
+            a.on('close', async () => {
+                try {
+                    console.log('end')
+                    await page.close();
+                    console.log('end1')
+                    await browser.close();
+                    console.log('end2')
+                } catch (e) {
 
-            page.close().then(() => {
-                browser.close().then(() => {
-                });
+                }
             });
         }
     }));
