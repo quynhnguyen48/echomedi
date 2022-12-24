@@ -8,7 +8,6 @@ const { createCoreController } = require('@strapi/strapi').factories;
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Blob } = require("buffer");
-const PDFDocument = require('pdf-lib').PDFDocument
 
 module.exports = createCoreController('api::product.product',
     ({ strapi }) => ({
