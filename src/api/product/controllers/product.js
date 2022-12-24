@@ -107,7 +107,7 @@ module.exports = createCoreController('api::product.product',
         },
         async generatePhieuCLS(ctx) {
             const browser = await puppeteer.launch({
-                headless: false
+                headless: true
             });
 
             let order = await strapi
