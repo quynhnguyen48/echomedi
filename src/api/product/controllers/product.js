@@ -82,7 +82,7 @@ module.exports = createCoreController('api::product.product',
             })
 
             // create a new page
-            const page = await browser.newPage({innerWidth: "800px"})
+            const page = await browser.newPage({innerWidth: "775px"})
 
             // set your html as the pages content
             let html = fs.readFileSync(`${__dirname}/test.html`, 'utf8');
