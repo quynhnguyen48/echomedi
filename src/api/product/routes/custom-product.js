@@ -35,6 +35,15 @@ module.exports = {
           policies: [],
           prefix: false,
         },
+      },
+      {
+        method: "POST",
+        path: "/product/generatePhieuCLS",
+        handler: "product.generatePhieuCLS",
+        config: {
+          policies: [],
+          prefix: false,
+        },
       }
     ]
 }  
