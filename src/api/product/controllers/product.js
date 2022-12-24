@@ -87,7 +87,8 @@ module.exports = createCoreController('api::product.product',
             // set your html as the pages content
             let html = fs.readFileSync(`${__dirname}/test.html`, 'utf8');
 
-            html = html.replace("[DAN_TOC]", "Kinh");
+            html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
+            html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
             await page.setContent(html, {
                 waitUntil: 'domcontentloaded'
             })
