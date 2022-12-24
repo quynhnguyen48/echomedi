@@ -98,7 +98,7 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[BMI]", ctx.request.body.bmi);
             html = html.replace("[SPO2]", ctx.request.body.spo2);
             await page.setContent(html, {
-                waitUntil: 'domcontentloaded'
+                waitUntil: 'networkidle0'
             })
 
 
