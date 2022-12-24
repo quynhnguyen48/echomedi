@@ -8,6 +8,7 @@ const { createCoreController } = require('@strapi/strapi').factories;
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { Blob } = require("buffer");
+const PDFDocument = require('pdf-lib').PDFDocument
 
 module.exports = createCoreController('api::product.product',
     ({ strapi }) => ({
@@ -82,7 +83,7 @@ module.exports = createCoreController('api::product.product',
             })
 
             // create a new page
-            const page = await browser.newPage({innerWidth: "775px"})
+            const page = await browser.newPage({ innerWidth: "775px" })
 
             // set your html as the pages content
             let html = fs.readFileSync(`${__dirname}/test.html`, 'utf8');
@@ -112,7 +113,7 @@ module.exports = createCoreController('api::product.product',
 
             let order = await strapi
                 .query('api::medical-record.medical-record')
-                .findOne({where: {id: ctx.request.body.id}});
+                .findOne({ where: { id: ctx.request.body.id } });
 
             let services = JSON.parse(order.services);
             // let bundle_services = JSON.parse(order.bundle_services);
@@ -141,12 +142,13 @@ module.exports = createCoreController('api::product.product',
             page.on('console', async (msg) => {
                 const msgArgs = msg.args();
                 for (let i = 0; i < msgArgs.length; ++i) {
-                  console.log(await msgArgs[i].jsonValue());
+                    console.log(await msgArgs[i].jsonValue());
                 }
-              });
-              
+            });
+
 
             await page.evaluate((services, bs) => {
+                let tableContainer = document.getElementById('table-container');
                 let bundle_services = JSON.parse(bs);
                 var a = document.getElementById('table');
                 services.forEach(s => {
@@ -187,20 +189,21 @@ module.exports = createCoreController('api::product.product',
                 })
             }, services, order.bundle_services.toString());
 
-            var a = await page.createPDFStream({printBackground: true, width: "1118px", height: "1684px"});
+            var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
-            ctx.send(a)
+            ctx.send(a);
+            // page.close();
         },
         async generatePhieuChiDinh(ctx) {
             const browser = await puppeteer.launch({
                 headless: true
             });
 
-            const data = [{"id":385,"attributes":{"label":"Gonorrhea PCR (Xét nghiệm PCR chẩn đoán bệnh Lậu)","createdAt":"2022-12-24T09:18:42.169Z","updatedAt":"2022-12-24T09:18:42.169Z","publishedAt":"2022-12-24T09:18:42.167Z","code":"XNMD014","host":"Nam SG","price":280000,"group_service":"Xét nghiệm dịch tiết"}}];
+            const data = [{ "id": 385, "attributes": { "label": "Gonorrhea PCR (Xét nghiệm PCR chẩn đoán bệnh Lậu)", "createdAt": "2022-12-24T09:18:42.169Z", "updatedAt": "2022-12-24T09:18:42.169Z", "publishedAt": "2022-12-24T09:18:42.167Z", "code": "XNMD014", "host": "Nam SG", "price": 280000, "group_service": "Xét nghiệm dịch tiết" } }];
 
             let order = await strapi
                 .query('api::medical-record.medical-record')
-                .findOne({where: {id: ctx.request.body.id}});
+                .findOne({ where: { id: ctx.request.body.id } });
 
             let services = JSON.parse(order.services);
             // let bundle_services = JSON.parse(order.bundle_services);
@@ -224,58 +227,66 @@ module.exports = createCoreController('api::product.product',
                 waitUntil: 'networkidle0'
             });
 
-            console.log('bundle_services', order.bundle_services)
+            let bundle_services = JSON.parse(order.bundle_services);
+            bundle_services.forEach(b => {
+                b.attributes.medical_services.data.forEach(ms => {
+                    ms.attributes.combo = b.attributes.label;
+                    services.push(ms);
+                })
+            })
+            console.log('bundle_services', services);
+
+            const groupByCategory = services.reduce((group, product) => {
+                const { host } = product.attributes;
+                group[host] = group[host] ?? [];
+                group[host].push(product);
+                return group;
+            }, {});
+
+            console.log('groupByCategory', groupByCategory)
+
 
             page.on('console', async (msg) => {
                 const msgArgs = msg.args();
                 for (let i = 0; i < msgArgs.length; ++i) {
-                  console.log(await msgArgs[i].jsonValue());
+                    console.log(await msgArgs[i].jsonValue());
                 }
-              });
-              
+            });
 
-            await page.evaluate((services, bs) => {
-                let bundle_services = JSON.parse(bs);
+
+            await page.evaluate((groupByCategory, bs) => {
+                let tableContainer = document.getElementById('table-container');
                 var a = document.getElementById('table');
-                services.forEach(s => {
+                Object.entries(groupByCategory).forEach(entry => {
+                    const [key, value] = entry;
                     var tr = document.createElement("tr");
                     var td1 = document.createElement("td");
-                    td1.innerHTML = s.attributes.label;
-                    var td2 = document.createElement("td");
-                    td2.innerHTML = s.attributes.group_service;
-                    var td3 = document.createElement("td");
-                    td3.innerHTML = s.attributes.price;
+                    td1.className = "bold";
+                    td1.innerHTML = key;
                     tr.append(td1);
-                    tr.append(td2);
-                    tr.append(td3);
-                    a.append(tr);
-                });
-                bundle_services.forEach(b => {
-                    var tr = document.createElement("tr");
-                    var td1 = document.createElement("td");
-                    td1.innerHTML = b.attributes.label;
-                    tr.append(td1);
-                    a.append(tr);
+                    a.prepend(tr);
 
-                    var medical_services = b.attributes.medical_services;
-
-                    medical_services.data.forEach(ms => {
+                    value.forEach(s => {
                         var tr = document.createElement("tr");
                         var td1 = document.createElement("td");
-                        td1.innerHTML = ms.attributes.label;
+                        td1.innerHTML = s.attributes.label;
                         var td2 = document.createElement("td");
-                        td2.innerHTML = ms.attributes.group_service;
+                        td2.innerHTML = s.attributes.group_service;
                         var td3 = document.createElement("td");
-                        td3.innerHTML = ms.attributes.price;
+                        td3.innerHTML = "";
                         tr.append(td1);
                         tr.append(td2);
                         tr.append(td3);
                         a.append(tr);
-                    })
-                })
-            }, services, order.bundle_services.toString());
+                    });
 
-            var a = await page.createPDFStream();
+                    var b = a.cloneNode();
+                    tableContainer.append(b);
+                    a = b;
+                });
+            }, groupByCategory);
+
+            var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
             ctx.send(a)
         }
