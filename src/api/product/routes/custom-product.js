@@ -44,6 +44,15 @@ module.exports = {
           policies: [],
           prefix: false,
         },
+      },
+      {
+        method: "POST",
+        path: "/product/generatePhieuChiDinh",
+        handler: "product.generatePhieuChiDinh",
+        config: {
+          policies: [],
+          prefix: false,
+        },
       }
     ]
 }  
