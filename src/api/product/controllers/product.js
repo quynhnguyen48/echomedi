@@ -89,12 +89,12 @@ module.exports = createCoreController('api::product.product',
 
             html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
             html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
-            html = html.replace("[MACH]", ctx.request.body.mach);
-            html = html.replace("[NHIET_DO]", ctx.request.body.nhiet_do);
-            html = html.replace("[HUYET_AP]", ctx.request.body.huyet_ap);
-            html = html.replace("[NHIP_THO]", ctx.request.body.nhip_tho);
-            html = html.replace("[CHIEU_CAO]", ctx.request.body.chieu_cao);
-            html = html.replace("[CAN_NANG]", ctx.request.body.can_nang);
+            html = html.replace("[MACH]", ctx.request.body.circuit);
+            html = html.replace("[NHIET_DO]", ctx.request.body.temperature);
+            html = html.replace("[HUYET_AP]", ctx.request.body.blood_pressure);
+            html = html.replace("[NHIP_THO]", ctx.request.body.respiratory_rate);
+            html = html.replace("[CHIEU_CAO]", ctx.request.body.height);
+            html = html.replace("[CAN_NANG]", ctx.request.body.weight);
             html = html.replace("[BMI]", ctx.request.body.bmi);
             html = html.replace("[SPO2]", ctx.request.body.spo2);
             await page.setContent(html, {
