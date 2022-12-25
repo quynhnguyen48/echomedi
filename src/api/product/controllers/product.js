@@ -85,7 +85,7 @@ module.exports = createCoreController('api::product.product',
             const page = await browser.newPage()
 
             // set your html as the pages content
-            let html = fs.readFileSync(`${__dirname}/test.html3`, 'utf8');
+            let html = fs.readFileSync(`${__dirname}/test3.html`, 'utf8');
 
             html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
             html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
