@@ -168,6 +168,8 @@ module.exports = createCoreController('api::product.product',
                     td3.innerHTML = s.attributes.price;
                     total += s.attributes.price;
                     tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td3);
                     if (cnt % 50 == 0) {
                         tr.className = "page-break-after-el";
                     }
