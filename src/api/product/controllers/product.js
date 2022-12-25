@@ -88,6 +88,7 @@ module.exports = createCoreController('api::product.product',
             let html = fs.readFileSync(`${__dirname}/test3.html`, 'utf8');
 
             html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
+            html = html.replace("[GIOI_TINH]", ctx.request.body.gender);
             html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
             html = html.replace("[MACH]", ctx.request.body.circuit);
             html = html.replace("[NHIET_DO]", ctx.request.body.temperature);
@@ -97,6 +98,9 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[CAN_NANG]", ctx.request.body.weight);
             html = html.replace("[BMI]", ctx.request.body.bmi);
             html = html.replace("[SPO2]", ctx.request.body.spo2);
+            html = html.replace("[TINH_THANH]", ctx.request.body.province);
+            html = html.replace("[QUAN_HUYEN]", ctx.request.body.district);
+            html = html.replace("[XA_PHUONG]", ctx.request.body.ward);
             await page.setContent(html, {
                 waitUntil: 'networkidle0'
             })
