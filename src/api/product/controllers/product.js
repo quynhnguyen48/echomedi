@@ -101,6 +101,11 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[TINH_THANH]", ctx.request.body.province);
             html = html.replace("[QUAN_HUYEN]", ctx.request.body.district);
             html = html.replace("[XA_PHUONG]", ctx.request.body.ward);
+            html = html.replace("[SDT]", ctx.request.body.phone);
+            html = html.replace("[ADDRESS]", ctx.request.body.address);
+            html = html.replace("[QUOC_GIA]", ctx.request.body.quoc_gia);
+            html = html.replace("[NGAY_SINH]", ctx.request.body.ngay_sinh);
+
             await page.setContent(html, {
                 waitUntil: 'networkidle0'
             })
