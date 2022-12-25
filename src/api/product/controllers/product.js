@@ -105,6 +105,10 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[ADDRESS]", ctx.request.body.address);
             html = html.replace("[QUOC_GIA]", ctx.request.body.quoc_gia);
             html = html.replace("[NGAY_SINH]", ctx.request.body.ngay_sinh);
+            html = html.replace("[QUOC_TINH]", ctx.request.body.quoc_tich);
+            html = html.replace("[NGHE_NGHIEP]", ctx.request.body.nghe_nghiep);
+            html = html.replace("[DIA_CHI]", ctx.request.body.address);
+            html = html.replace("[EMAIL]", ctx.request.body.email);
 
             await page.setContent(html, {
                 waitUntil: 'networkidle0'
