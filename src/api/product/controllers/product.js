@@ -208,7 +208,6 @@ module.exports = createCoreController('api::product.product',
                     td3.classList.add('price');
                     total += b.attributes.price;
                     tr.append(td3);
-                    cnt++;
                     if (cnt % 50 == 0) tr.className = "page-break-after-el";
                     a.append(tr);
 
@@ -229,7 +228,6 @@ module.exports = createCoreController('api::product.product',
                         tr.append(td1);
                         tr.append(td2);
                         tr.append(td3);
-                        cnt ++;
                         if (cnt % 50 == 0) tr.className = "page-break-after-el";
                         a.append(tr);
                     })
