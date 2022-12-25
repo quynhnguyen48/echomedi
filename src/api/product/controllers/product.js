@@ -82,10 +82,10 @@ module.exports = createCoreController('api::product.product',
             })
 
             // create a new page
-            const page = await browser.newPage({ innerWidth: "775px" })
+            const page = await browser.newPage()
 
             // set your html as the pages content
-            let html = fs.readFileSync(`${__dirname}/test.html`, 'utf8');
+            let html = fs.readFileSync(`${__dirname}/test.html3`, 'utf8');
 
             html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
             html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
@@ -101,11 +101,20 @@ module.exports = createCoreController('api::product.product',
                 waitUntil: 'networkidle0'
             })
 
-            var a = await page.createPDFStream();
+            var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
 
-            ctx.send(a)
+            ctx.send(a);
+            a.on('close', async () => {
+                try {
+                    console.log('end')
+                    await page.close();
+                    console.log('end1')
+                    await browser.close();
+                    console.log('end2')
+                } catch (e) {
 
-            browser.close();
+                }
+            });
         },
         async generatePhieuCLS(ctx) {
             const browser = await puppeteer.launch({
