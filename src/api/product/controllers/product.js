@@ -166,7 +166,7 @@ module.exports = createCoreController('api::product.product',
                     td2.innerHTML = s.attributes.group_service;
                     var td3 = document.createElement("td");
                     td3.classList.add("price");
-                    td3.innerHTML = s.attributes.price;
+                    td3.innerHTML = numberWithCommas(s.attributes.price);
                     total += s.attributes.price;
                     tr.append(td1);
                     tr.append(td2);
@@ -190,7 +190,7 @@ module.exports = createCoreController('api::product.product',
                     td2.innerHTML = "";
                     tr.append(td2);
                     var td3 = document.createElement("td");
-                    td3.innerHTML = b.attributes.price;
+                    td3.innerHTML = numberWithCommas(b.attributes.price);
                     td3.classList.add('price');
                     total += b.attributes.price;
                     tr.append(td3);
@@ -228,7 +228,7 @@ module.exports = createCoreController('api::product.product',
                     td2.innerHTML = "";
                     tr.append(td2);
                     var td3 = document.createElement("td");
-                    td3.innerHTML = total;
+                    td3.innerHTML = numberWithCommas(total);
                     td3.className = "bold price";
                     tr.append(td3);
                     cnt ++;
@@ -358,3 +358,9 @@ module.exports = createCoreController('api::product.product',
             });
         }
     }));
+
+
+function numberWithCommas(x) {
+    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+  
