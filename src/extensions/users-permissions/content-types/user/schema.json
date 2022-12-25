@@ -89,6 +89,18 @@
       "relation": "oneToMany",
       "target": "api::booking.booking",
       "mappedBy": "user"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "address": {
+      "type": "json"
+    },
+    "birthday": {
+      "type": "date"
     }
   }
 }
