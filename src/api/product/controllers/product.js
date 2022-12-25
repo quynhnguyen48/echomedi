@@ -149,6 +149,11 @@ module.exports = createCoreController('api::product.product',
 
 
             await page.evaluate((services, bs) => {
+                function numberWithCommas(x) {
+                    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+  
+                
                 let total = 0;
                 let cnt = 0;
                 let tableContainer = document.getElementById('table-container');
@@ -358,9 +363,3 @@ module.exports = createCoreController('api::product.product',
             });
         }
     }));
-
-
-function numberWithCommas(x) {
-    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-  
