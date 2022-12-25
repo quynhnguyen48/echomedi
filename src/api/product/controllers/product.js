@@ -155,8 +155,12 @@ module.exports = createCoreController('api::product.product',
                 let bundle_services = JSON.parse(bs);
                 var a = document.getElementById('table');
                 services.forEach(s => {
+                    cnt++;
                     var tr = document.createElement("tr");
                     var td1 = document.createElement("td");
+                    if (cnt % 50 == 0) {
+                        td1.className = "p-150";
+                    }
                     td1.innerHTML = s.attributes.label;
                     var td2 = document.createElement("td");
                     td2.innerHTML = s.attributes.group_service;
@@ -164,15 +168,20 @@ module.exports = createCoreController('api::product.product',
                     td3.innerHTML = s.attributes.price;
                     total += s.attributes.price;
                     tr.append(td1);
-                    cnt++;
-                    if (cnt % 50 == 0) tr.className = "page-break-after-el";
+                    if (cnt % 50 == 0) {
+                        tr.className = "page-break-after-el";
+                    }
                     a.append(tr);
                 });
                 bundle_services.forEach(b => {
+                    cnt++;
                     var tr = document.createElement("tr");
                     var td1 = document.createElement("td");
                     td1.innerHTML = b.attributes.label;
                     td1.className = "bold";
+                    if (cnt % 50 == 0) {
+                        td1.classList.add("p-150");
+                    }
                     tr.append(td1);
                     var td2 = document.createElement("td");
                     td2.innerHTML = "";
@@ -188,9 +197,13 @@ module.exports = createCoreController('api::product.product',
                     var medical_services = b.attributes.medical_services;
 
                     medical_services.data.forEach(ms => {
+                        cnt++;
                         var tr = document.createElement("tr");
                         var td1 = document.createElement("td");
                         td1.innerHTML = ms.attributes.label;
+                        if (cnt % 50 == 0) {
+                            td1.classList.add("p-150");
+                        }
                         var td2 = document.createElement("td");
                         td2.innerHTML = ms.attributes.group_service;
                         var td3 = document.createElement("td");
