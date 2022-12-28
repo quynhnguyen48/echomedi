@@ -88,10 +88,16 @@ module.exports = createCoreController('api::product.product',
             const us = await strapi
                 .query('api::cart.cart')
                 .findOne({
-                    where: { users_permissions_user: user.id }, populate: {
+                    where: { users_permissions_user: user.id }, 
+                    populate: {
                         cart_lines: {
                             populate: {
                                 product: {
+                                    populate: {
+                                        image: true,
+                                    }
+                                },
+                                service: {
                                     populate: {
                                         image: true,
                                     }
