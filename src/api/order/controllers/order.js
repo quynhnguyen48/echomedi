@@ -67,6 +67,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         {
           populate: {
             product: true,
+            service: true,
           }
         },
       }
