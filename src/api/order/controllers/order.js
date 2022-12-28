@@ -74,7 +74,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     let totalPrice = 0;
     result.cart_lines.forEach(element => {
-      totalPrice = totalPrice + element.product.price;
+      totalPrice = totalPrice + element.product ? element.product.price : parseInt(element.service.price);
     });
 
     let order = await strapi
