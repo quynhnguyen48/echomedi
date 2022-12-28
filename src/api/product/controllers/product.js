@@ -57,6 +57,32 @@ module.exports = createCoreController('api::product.product',
 
             ctx.send({ cart_id: cart.id });
         },
+        async addServiceToCart(ctx) {
+            const { user } = ctx.state;
+            let cart = await strapi
+                .query('api::cart.cart')
+                .findOne({
+                    where: { users_permissions_user: user.id }, populate: {
+                        cart_lines: {
+                            populate: {
+                                product: true,
+                            }
+                        }
+                    }
+                });
+
+            if (!cart) {
+                cart = await strapi
+                    .query('api::cart.cart')
+                    .create({ data: { users_permissions_user: user.id, publishedAt: new Date().toISOString() } });
+            }
+
+            await strapi
+                .query('api::cart-line.cart-line')
+                .create({ data: { service: ctx.request.body.service_id, cart: cart.id, publishedAt: new Date().toISOString() } });
+
+            ctx.send({ cart_id: cart.id });
+        },
         async getCart(ctx) {
             const { user } = ctx.state;
             const us = await strapi

@@ -19,6 +19,15 @@ module.exports = {
         },
       },
       {
+        method: "POST",
+        path: "/product/addServiceToCart",
+        handler: "product.addServiceToCart",
+        config: {
+          policies: [],
+          prefix: false,
+        },
+      },
+      {
         method: "GET",
         path: "/product/getCart",
         handler: "product.getCart",
