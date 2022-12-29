@@ -106,6 +106,9 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     ctx.send({url: vnpUrl});
   },
+  async updateOrder(ctx) {
+    console.log('ctx', ctx);
+  },
   async createOrder(ctx) {
     if (!ctx.state.user) {
       throw new ApplicationError('You must be authenticated to reset your password');

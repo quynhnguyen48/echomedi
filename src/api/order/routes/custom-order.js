@@ -36,5 +36,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/orders/updateOrder",
+      handler: "order.updateOrder",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };
