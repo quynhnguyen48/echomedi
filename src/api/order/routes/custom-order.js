@@ -27,5 +27,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/orders/createPaymentUrl",
+      handler: "order.createPaymentUrl",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };

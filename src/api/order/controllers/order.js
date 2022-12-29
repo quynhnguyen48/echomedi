@@ -1,5 +1,6 @@
 "use strict";
 const utils = require('@strapi/utils');
+const moment = require("moment");
 const { ApplicationError, ValidationError } = utils.errors;
 
 /**
@@ -22,29 +23,87 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     const { id } = ctx.params;
     var product = await strapi.db.query('api::order.order').findOne({
       populate: {
-          cart: {
-            populate: {
-              cart_lines: {
-                populate: {
-                  product: true
-                }
-              },
-            }
-          },
-          medicines: {
+        cart: {
+          populate: {
+            cart_lines: {
               populate: {
-                  image: true,
+                product: true
               }
-          },
+            },
+          }
+        },
+        medicines: {
+          populate: {
+            image: true,
+          }
+        },
       },
       where: {
-          id
+        id
       }
-  });
+    });
 
-  return {
+    return {
       product,
-  };
+    };
+  },
+  async createPaymentUrl(ctx) {
+    console.log('ctx', ctx);
+    const req = ctx.request;
+
+    var ipAddr = req.headers['x-forwarded-for'] ||
+        req.connection?.remoteAddress ||
+        req.socket?.remoteAddress ||
+        req.connection?.socket?.remoteAddress;
+    console.log('ipaddress', ipAddr)
+
+    var tmnCode = "ECHOMEDI";
+    var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
+    var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    var returnUrl = "https://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
+
+    var createDate = moment().format('YYYYMMDDhmmss').toString();
+    var orderId = moment().format('HHmmss');
+    var amount = "1000000";
+    var bankCode = "VNPAYQR";
+    
+    var orderInfo = "abc";
+    var orderType = "billpayment";
+    var locale = req.body.language;
+    if(locale === null || locale === ''){
+        locale = 'vn';
+    }
+    var currCode = 'VND';
+    var vnp_Params = {};
+    vnp_Params['vnp_Version'] = '2.1.0';
+    vnp_Params['vnp_Command'] = 'pay';
+    vnp_Params['vnp_TmnCode'] = "ECHOMEDI";
+    // vnp_Params['vnp_Merchant'] = ''
+    vnp_Params['vnp_Locale'] = "vn";
+    vnp_Params['vnp_CurrCode'] = currCode;
+    vnp_Params['vnp_TxnRef'] = orderId;
+    vnp_Params['vnp_OrderInfo'] = orderInfo;
+    vnp_Params['vnp_OrderType'] = orderType;
+    vnp_Params['vnp_Amount'] = amount * 100;
+    vnp_Params['vnp_ReturnUrl'] = returnUrl;
+    vnp_Params['vnp_IpAddr'] = ipAddr;
+    vnp_Params['vnp_CreateDate'] = createDate;
+    if(bankCode !== null && bankCode !== ''){
+        vnp_Params['vnp_BankCode'] = bankCode;
+    }
+
+    vnp_Params = sortObject(vnp_Params);
+
+    var querystring = require('qs');
+    var signData = querystring.stringify(vnp_Params, { encode: false });
+    var crypto = require("crypto");     
+    var hmac = crypto.createHmac("sha512", secretKey);
+    var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex"); 
+    vnp_Params['vnp_SecureHash'] = signed;
+    vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
+    console.log('vnpUrl', vnpUrl);
+
+    ctx.send({url: vnpUrl});
   },
   async createOrder(ctx) {
     if (!ctx.state.user) {
@@ -54,16 +113,18 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     const { id } = ctx.state.user;
     const user = await strapi
       .query('plugin::users-permissions.user')
-      .findOne({ where: { id }, populate: { cart: true }});
-    
+      .findOne({ where: { id }, populate: { cart: true } });
+
     let cart = user.cart;
     if (!user.cart) {
       throw new ApplicationError("You don't have any item in cart.");
     }
 
-    let result = await strapi.query('api::cart.cart').findOne({ where: { id: cart.id }, 
-      populate: 
-      { cart_lines: 
+    let result = await strapi.query('api::cart.cart').findOne({
+      where: { id: cart.id },
+      populate:
+      {
+        cart_lines:
         {
           populate: {
             product: true,
@@ -76,7 +137,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     let totalPrice = 0;
     result.cart_lines.forEach(element => {
       try {
-      totalPrice = totalPrice + element.product ? element.product.price : parseInt(element.service.price);
+        totalPrice = totalPrice + element.product ? element.product.price : parseInt(element.service.price);
       } catch (e) {
 
       }
@@ -84,17 +145,37 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     let order = await strapi
       .query('api::order.order')
-      .create({ data: { 
-        cart: cart.id, 
-        users_permissions_user: id, 
-        publishedAt: new Date().toISOString(),
-        total: totalPrice,
-        num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
-       } });
-      
+      .create({
+        data: {
+          cart: cart.id,
+          users_permissions_user: id,
+          publishedAt: new Date().toISOString(),
+          total: totalPrice,
+          num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
+        }
+      });
 
-    await strapi.plugins['users-permissions'].services.user.edit(id , {cart: null});
+
+    await strapi.plugins['users-permissions'].services.user.edit(id, { cart: null });
 
     return order;
   }
 }));
+
+
+function sortObject(obj) {
+	var sorted = {};
+	var str = [];
+	var key;
+	for (key in obj){
+		if (obj.hasOwnProperty(key)) {
+		str.push(encodeURIComponent(key));
+		}
+	}
+	str.sort();
+    for (key = 0; key < str.length; key++) {
+        sorted[str[key]] = encodeURIComponent(obj[str[key]]).replace(/%20/g, "+");
+    }
+    return sorted;
+}
+

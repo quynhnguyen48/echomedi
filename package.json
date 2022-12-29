@@ -17,6 +17,7 @@
     "@strapi/strapi": "4.5.3",
     "better-sqlite3": "7.4.6",
     "dayjs": "^1.11.7",
+    "moment": "^2.29.4",
     "puppeteer": "^19.4.1",
     "strapi-plugin-populate-deep": "^1.1.2"
   },
