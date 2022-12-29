@@ -66,7 +66,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
     var orderId = moment().format('HHmmss');
     var amount = "1000000";
-    var bankCode = "VNPAYQR";
+    var bankCode = "";
     
     var orderInfo = "abc";
     var orderType = "billpayment";
