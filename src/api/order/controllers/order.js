@@ -55,16 +55,16 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         req.connection?.remoteAddress ||
         req.socket?.remoteAddress ||
         req.connection?.socket?.remoteAddress;
-    console.log('ipaddress', ipAddr)
-    ipAddr = "116.118.114.232";
+    // console.log('ipaddress', ipAddr)
+    // ipAddr = "116.118.114.232";
 
     var tmnCode = "ECHOMEDI";
     var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
     var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    var returnUrl = "https://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
+    var returnUrl = "echomedi.me";
 
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
-    var orderId = moment().format('HHmmss');
+    var orderId = moment().format('hhmmss') + "1";
     var amount = "1000000";
     var bankCode = "";
     
