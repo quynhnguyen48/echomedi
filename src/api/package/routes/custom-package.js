@@ -26,6 +26,15 @@ module.exports = {
           policies: [],
           prefix: false,
         }
+      },
+      {
+        method: "POST",
+        path: "/packages/subscribeInfo",
+        handler: "package.subscribeInfo",
+        config: {
+          policies: [],
+          prefix: false,
+        }
       }
     ]
 }  
