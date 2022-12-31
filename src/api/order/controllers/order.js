@@ -134,8 +134,6 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         req.connection?.remoteAddress ||
         req.socket?.remoteAddress ||
         req.connection?.socket?.remoteAddress;
-    // console.log('ipaddress', ipAddr)
-    // ipAddr = "116.118.114.232";
 
     var tmnCode = "ECHOMEDI";
     var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
