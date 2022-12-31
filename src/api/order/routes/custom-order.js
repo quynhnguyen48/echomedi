@@ -29,6 +29,15 @@ module.exports = {
     },
     {
       method: "GET",
+      path: "/orders/getOrderHistory",
+      handler: "order.getOrderHistory",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
+    {
+      method: "GET",
       path: "/orders/getOrderDetailByCode/:code",
       handler: "order.getOrderDetailByCode",
       config: {

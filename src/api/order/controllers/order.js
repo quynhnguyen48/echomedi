@@ -186,6 +186,24 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async updateOrder(ctx) {
     console.log('ctx', ctx);
   },
+  async getOrderHistory(ctx) {
+    const { id } = ctx.state.user;
+    let orders = await strapi.query('api::order.order').findMany({
+      where: { users_permissions_user: id },
+      populate:
+      {
+        cart_lines:
+        {
+          populate: {
+            product: true,
+            service: true,
+          }
+        },
+      }
+    });
+
+    return {orders};
+  },
   async createOrder(ctx) {
     if (!ctx.state.user) {
       throw new ApplicationError('You must be authenticated to reset your password');
