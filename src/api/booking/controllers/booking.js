@@ -15,8 +15,10 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
   async getBookingWithRange(ctx) {
     let bookings = await strapi.query("api::booking.booking").findMany({
       where: {
-        bookingDate_gte: new Date(ctx.request.body.data.startDate),
-        bookingDate_lte: new Date(ctx.request.body.data.endDate),
+        bookingDate: {
+          $gte: new Date(ctx.request.body.data.startDate),
+          $lte: new Date(ctx.request.body.data.endDate),
+        }
       }
     });
 
