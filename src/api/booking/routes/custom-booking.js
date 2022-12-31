@@ -9,5 +9,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/bookings/createBooking",
+      handler: "booking.createBooking",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };
