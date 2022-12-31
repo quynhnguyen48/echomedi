@@ -28,6 +28,15 @@ module.exports = {
       },
     },
     {
+      method: "GET",
+      path: "/orders/getOrderDetailByCode/:code",
+      handler: "order.getOrderDetailByCode",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
+    {
       method: "POST",
       path: "/orders/createPaymentUrl",
       handler: "order.createPaymentUrl",
