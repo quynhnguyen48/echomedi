@@ -44,6 +44,24 @@ module.exports = {
           policies: [],
           prefix: false,
         }
+      },
+      {
+        method: "POST",
+        path: "/packages/emailGift",
+        handler: "package.emailGift",
+        config: {
+          policies: [],
+          prefix: false,
+        }
+      },
+      {
+        method: "POST",
+        path: "/packages/emailPayment",
+        handler: "package.emailPayment",
+        config: {
+          policies: [],
+          prefix: false,
+        }
       }
     ]
 }  

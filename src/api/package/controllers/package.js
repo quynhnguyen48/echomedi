@@ -327,16 +327,80 @@ module.exports = createCoreController('api::package.package',
         let info = await transporter.sendMail({
           from: '<inquiry@echomedi.com>', // sender address
           to: ctx.request.body.email, // list of receivers
-          subject: "ECHO MEDI- Đăng Ký Nhận Thông Tin ", // Subject line
+          subject: "ECHO MEDI - Thông Tin Gói Thành Viên", // Subject line
           text: "Xin chào", // plain text body
           html: `
             <p>Xin chào [Tên khách hàng]</p>
             
             <p>Chào mừng [Tên khách hàng] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
-            <p>Bây giờ, bạn có thể xem thêm về các gói sản phẩm, dịch vụ, của ECHO MEDI qua website [link], và chọn sản phẩm phù hợp nhất với nhu cầu hiện tại của bạn. Chúng tôi sẽ luôn giữ bạn cập nhật với những thông tin chăm sóc sức khỏe hay chương trình và ưu đãi mới, giúp bạn luôn chủ động trong việc bảo vệ sức khỏe toàn diện.</p>
-            <p>Nếu có bất kỳ câu hỏi hoặc ý kiến nào muốn chia sẻ với ECHO MEDI, đừng ngần ngại liên hệ với chúng tôi qua hotline 1900 638 408 hoặc echomedi.com nhé</p>
+            <p>ECHO MEDI vừa nhận được lời nhắn của bạn qua trang web về gói thành viên [xxx]. Bộ phận chuyên môn của chúng tôi sẽ nhanh chóng liên lạc và giải quyết thắc mắc của bạn trong thời gian ngắn nhất.</p>
+            <p>Trong lúc đó, bạn có thể xem thêm một số sản phẩm khác của ECHO MEDI qua trang web [xxx], hoặc gọi số hotline [xxx] nếu cần hỗ trợ gấp</p>
             
-            <p>Rất mong được đồng hành cùng bạn trong chặng đường sắp tới,</p>
+            <p>Cảm ơn bạn vì đã luôn chăm sóc cho sức khỏe bản thân,</p>
+            <p>ECHO MEDI </p>
+        `, // html body
+        });
+
+        ctx.send({ok: true});
+      },
+
+      async emailGift(ctx) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.hostinger.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            user: "noreply@echomedi.com", // generated ethereal user
+            pass: "1026Echomedi@123", // generated ethereal password
+          },
+        });
+
+        let info = await transporter.sendMail({
+          from: '<orders@echomedi.com>', // sender address
+          to: ctx.request.body.email, // list of receivers
+          subject: "ECHO MEDI - Xác Nhận Thanh Toán - [Mã thanh toán]", // Subject line
+          text: "Xin chào", // plain text body
+          html: `
+            <p>Xin chào [Tên khách hàng]</p>
+            
+            <p>Lời đầu tiên, ECHO MEDI cảm ơn bạn vì đã cùng chúng tôi quan tâm chăm sóc sức khỏe toàn diện cho những người thương yêu.</p>
+            <p>[Thông tin quà tặng]            </p>
+            <p>Nếu bạn có nhu cầu tặng thêm các gói khám khác hoặc sử dụng các dịch vụ của ECHO MEDI, bạn có thể liên hệ qua hotline hoặc email cho ECHO MEDI. Chúng tôi mong rằng không chỉ bạn mà cả những người thân yêu sẽ luôn có một cuộc sống trọn vẹn
+            </p>
+            <p>Thương gửi,            </p>
+            <p>ECHO MEDI </p>
+        `, // html body
+        });
+
+        ctx.send({ok: true});
+      },
+
+      async emailPayment(ctx) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.hostinger.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            user: "inquiry@echomedi.com", // generated ethereal user
+            pass: "1026Echomedi@123", // generated ethereal password
+          },
+        });
+
+        let info = await transporter.sendMail({
+          from: '<orders@echomedi.com>', // sender address
+          to: ctx.request.body.email, // list of receivers
+          subject: "ECHO MEDI - Xác Nhận Thanh Toán - [Mã thanh toán]", // Subject line
+          text: "Xin chào", // plain text body
+          html: `
+            <p>Xin chào [Tên khách hàng]</p>
+            
+            <p>Đầu tiên, ECHO MEDI cảm ơn bạn vì đã tin gửi sức khỏe toàn diện cho chúng tôi.  </p>
+            <p>Dưới đây là thông tin đơn hàng bạn vừa thanh toán qua website ECHO MEDI, bạn vui lòng kiểm tra lại các thông tin và liên hệ ngay với chúng tôi nếu có bất kỳ chỉnh sửa nào.</p>
+            <p>[Thông tin đơn hàng]</p>
+            <p>Nếu không có bất kỳ vấn đề gì, đơn hàng sẽ được ghi nhận và chuyển tới các bước kế tiếp</p>
+            [Bước kế tiếp: liên hệ khám, dặn dò trước khám, etc.]
+            <p>Trong vài ngày tới, ECHO MEDI sẽ liên hệ với bạn để lên lịch hẹn khám/giao hàng. Bạn vui lòng để ý điện thoại/email/tin nhắn và phản hồi với chúng tôi nếu có thắc mắc hoặc vấn đề phát sinh nhé            </p>
+            <p>Cảm ơn bạn vì đã quan tâm đến sức khỏe của mình,</p>
             <p>ECHO MEDI </p>
         `, // html body
         });
