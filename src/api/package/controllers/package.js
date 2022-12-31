@@ -313,6 +313,37 @@ module.exports = createCoreController('api::package.package',
           return {ok: true}
       },
 
+      async inquiryMembership(ctx) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.hostinger.com",
+          port: 465,
+          secure: true, // true for 465, false for other ports
+          auth: {
+            user: "inquiry@echomedi.com", // generated ethereal user
+            pass: "1026Echomedi@123", // generated ethereal password
+          },
+        });
+
+        let info = await transporter.sendMail({
+          from: '<inquiry@echomedi.com>', // sender address
+          to: ctx.request.body.email, // list of receivers
+          subject: "ECHO MEDI- Đăng Ký Nhận Thông Tin ", // Subject line
+          text: "Xin chào", // plain text body
+          html: `
+            <p>Xin chào [Tên khách hàng]</p>
+            
+            <p>Chào mừng [Tên khách hàng] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
+            <p>Bây giờ, bạn có thể xem thêm về các gói sản phẩm, dịch vụ, của ECHO MEDI qua website [link], và chọn sản phẩm phù hợp nhất với nhu cầu hiện tại của bạn. Chúng tôi sẽ luôn giữ bạn cập nhật với những thông tin chăm sóc sức khỏe hay chương trình và ưu đãi mới, giúp bạn luôn chủ động trong việc bảo vệ sức khỏe toàn diện.</p>
+            <p>Nếu có bất kỳ câu hỏi hoặc ý kiến nào muốn chia sẻ với ECHO MEDI, đừng ngần ngại liên hệ với chúng tôi qua hotline 1900 638 408 hoặc echomedi.com nhé</p>
+            
+            <p>Rất mong được đồng hành cùng bạn trong chặng đường sắp tới,</p>
+            <p>ECHO MEDI </p>
+        `, // html body
+        });
+
+        ctx.send({ok: true});
+      },
+
       async subscribeInfo(ctx) { 
 
         let transporter = nodemailer.createTransport({

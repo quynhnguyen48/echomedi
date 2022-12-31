@@ -35,6 +35,15 @@ module.exports = {
           policies: [],
           prefix: false,
         }
+      },
+      {
+        method: "POST",
+        path: "/packages/inquiryMembership",
+        handler: "package.inquiryMembership",
+        config: {
+          policies: [],
+          prefix: false,
+        }
       }
     ]
 }  
