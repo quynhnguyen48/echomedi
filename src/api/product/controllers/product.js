@@ -90,6 +90,7 @@ module.exports = createCoreController('api::product.product',
                 .findOne({
                     where: { users_permissions_user: user.id }, 
                     populate: {
+                        users_permissions_user: true,
                         cart_lines: {
                             populate: {
                                 product: {
