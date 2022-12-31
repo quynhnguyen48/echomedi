@@ -65,6 +65,7 @@
     "status": {
       "type": "enumeration",
       "enum": [
+        "draft",
         "ordered",
         "done",
         "canceled"

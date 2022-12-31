@@ -48,7 +48,56 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     };
   },
   async createPaymentUrl(ctx) {
-    console.log('ctx', ctx);
+    if (!ctx.state.user) {
+      throw new ApplicationError('You must be authenticated to reset your password');
+    }
+
+    const { id } = ctx.state.user;
+    const user = await strapi
+      .query('plugin::users-permissions.user')
+      .findOne({ where: { id }, populate: { cart: true } });
+
+    let cart = user.cart;
+    if (!user.cart) {
+      throw new ApplicationError("You don't have any item in cart.");
+    }
+
+    let result = await strapi.query('api::cart.cart').findOne({
+      where: { id: cart.id },
+      populate:
+      {
+        cart_lines:
+        {
+          populate: {
+            product: true,
+            service: true,
+          }
+        },
+      }
+    });
+
+    let totalPrice = 0;
+    result.cart_lines.forEach(element => {
+      try {
+        totalPrice = totalPrice + element.product ? element.product.price : parseInt(element.service.price);
+      } catch (e) {
+
+      }
+    });
+
+    let order = await strapi
+      .query('api::order.order')
+      .create({
+        data: {
+          code: generateCode("ORD"),
+          cart: cart.id,
+          users_permissions_user: id,
+          publishedAt: new Date().toISOString(),
+          total: totalPrice,
+          num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
+        }
+      });
+      
     const req = ctx.request;
 
     var ipAddr = req.headers['x-forwarded-for'] ||
@@ -68,7 +117,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var amount = "1000000";
     var bankCode = "";
     
-    var orderInfo = "abc";
+    var orderInfo = order.code;
     var orderType = "billpayment";
     var locale = req.body.language;
     if(locale === null || locale === ''){
@@ -183,3 +232,16 @@ function sortObject(obj) {
     return sorted;
 }
 
+function generateCode(prefix) {
+  const CODE_LENGTH = 6;
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < CODE_LENGTH; i++) {
+    result += characters.charAt(
+      Math.floor(Math.random() * charactersLength)
+    );
+  }
+  return (prefix + result).toLocaleUpperCase();
+}
