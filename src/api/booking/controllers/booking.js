@@ -29,6 +29,8 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       });
     }
 
+    console.log('patient', patient)
+
     let booking = strapi.query("api::booking.booking").create({
       data: {
         ...ctx.request.body,
