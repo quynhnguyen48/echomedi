@@ -18,5 +18,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/bookings/getBookingWithRange",
+      handler: "booking.getBookingWithRange",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };

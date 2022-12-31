@@ -12,6 +12,16 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     var { query } = ctx.request.body;
     return strapi.query("api::booking.booking").count({ where: query });
   },
+  async getBookingWithRange(ctx) {
+    let bookings = strapi.query("api::booking.booking").find({
+      where: {
+        bookingDate_gte: new Date(ctx.request.body.data.startDate),
+        bookingDate_lte: new Date(ctx.request.body.data.endDate),
+      }
+    });
+
+    return {bookings};
+  },
   async createBooking(ctx) {
     let patient;
     if (ctx.request.body.data.createNewPatient) {
