@@ -16,18 +16,15 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     return strapi.query("api::order.order").count({ where: query });
   },
   async getOrderDetailByCode(ctx) {
-    if (!ctx.state.user) {
-      throw new ApplicationError('You must be authenticated to reset your password');
-    }
-
     const { code } = ctx.params;
-    var product = await strapi.db.query('api::order.order').findOne({
+    var order = await strapi.db.query('api::order.order').findOne({
       populate: {
         cart: {
           populate: {
             cart_lines: {
               populate: {
-                product: true
+                product: true,
+                service: true,
               }
             },
           }
@@ -44,7 +41,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     });
 
     return {
-      product,
+      order,
     };
   },
   async getOrderDetail(ctx) {
