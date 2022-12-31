@@ -140,7 +140,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var tmnCode = "ECHOMEDI";
     var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
     var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    var returnUrl = "http://echomedi.me";
+    var returnUrl = "http://echomedi.me/order_detail/?code=" + order.code;
 
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
     var orderId = moment().format('hhmmss') + "1";
