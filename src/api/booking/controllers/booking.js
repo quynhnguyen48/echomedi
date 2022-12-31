@@ -13,7 +13,6 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     return strapi.query("api::booking.booking").count({ where: query });
   },
   async createBooking(ctx) {
-    console.log('body', ctx.request.body)
     let patient;
     if (ctx.request.body.data.createNewPatient) {
       patient = await strapi.query("api::patient.patient").create({
@@ -26,17 +25,15 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       patient = await strapi.query("api::patient.patient").findOne({
         where: {
           phone: ctx.request.body.phone,
-          publishedAt: new Date(),
         }
       });
     }
-
-    console.log('patient', patient)
 
     let booking = strapi.query("api::booking.booking").create({
       data: {
         ...ctx.request.body,
         patient: patient.id,
+        publishedAt: new Date(),
       }
     });
 
