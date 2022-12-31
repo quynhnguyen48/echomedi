@@ -15,6 +15,38 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var { query } = ctx.request.body;
     return strapi.query("api::order.order").count({ where: query });
   },
+  async getOrderDetailByCode(ctx) {
+    if (!ctx.state.user) {
+      throw new ApplicationError('You must be authenticated to reset your password');
+    }
+
+    const { code } = ctx.params;
+    var product = await strapi.db.query('api::order.order').findOne({
+      populate: {
+        cart: {
+          populate: {
+            cart_lines: {
+              populate: {
+                product: true
+              }
+            },
+          }
+        },
+        medicines: {
+          populate: {
+            image: true,
+          }
+        },
+      },
+      where: {
+        code
+      }
+    });
+
+    return {
+      product,
+    };
+  },
   async getOrderDetail(ctx) {
     if (!ctx.state.user) {
       throw new ApplicationError('You must be authenticated to reset your password');
@@ -89,6 +121,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       .query('api::order.order')
       .create({
         data: {
+          status: "draft",
           code: generateCode("ORD"),
           cart: cart.id,
           users_permissions_user: id,
