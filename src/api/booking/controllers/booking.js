@@ -18,13 +18,15 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     if (ctx.request.body.data.createNewPatient) {
       patient = await strapi.query("api::patient.patient").create({
         data: {
-          ...ctx.request.body.data
+          ...ctx.request.body.data,
+          publishedAt: new Date(),
         }
       });
     } else {
       patient = await strapi.query("api::patient.patient").findOne({
         where: {
           phone: ctx.request.body.phone,
+          publishedAt: new Date(),
         }
       });
     }
