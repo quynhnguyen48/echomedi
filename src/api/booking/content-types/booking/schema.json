@@ -72,7 +72,8 @@
     "medical_record": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::medical-record.medical-record"
+      "target": "api::medical-record.medical-record",
+      "inversedBy": "booking"
     }
   }
 }
