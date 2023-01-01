@@ -22,6 +22,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       },
       populate: {
         patient: true,
+        medical_record: true,
       }
     });
 
