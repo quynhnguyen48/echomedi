@@ -62,6 +62,9 @@
     "bundle_services": {
       "type": "json"
     },
+    "total": {
+      "type": "decimal"
+    },
     "patient": {
       "type": "relation",
       "relation": "oneToOne",

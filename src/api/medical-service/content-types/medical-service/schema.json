@@ -26,6 +26,12 @@
     },
     "group_service": {
       "type": "string"
+    },
+    "service_bundles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service-bundle.service-bundle",
+      "mappedBy": "medical_services"
     }
   }
 }

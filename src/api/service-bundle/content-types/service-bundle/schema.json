@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_bundles",
+  "info": {
+    "singularName": "service-bundle",
+    "pluralName": "service-bundles",
+    "displayName": "Service Bundle",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "medical_services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::medical-service.medical-service",
+      "inversedBy": "service_bundles"
+    },
+    "label": {
+      "type": "string"
+    },
+    "price": {
+      "type": "integer"
+    }
+  }
+}
