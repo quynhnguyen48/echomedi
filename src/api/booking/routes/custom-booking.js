@@ -27,5 +27,14 @@ module.exports = {
         prefix: "",
       },
     },
+    {
+      method: "POST",
+      path: "/bookings/updateStatusBooking",
+      handler: "booking.updateStatusBooking",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
   ],
 };

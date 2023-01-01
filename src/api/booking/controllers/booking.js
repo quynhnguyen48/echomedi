@@ -19,6 +19,9 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
           $gte: new Date(ctx.request.body.data.startDate),
           $lte: new Date(ctx.request.body.data.endDate),
         }
+      },
+      populate: {
+        patient: true,
       }
     });
 
@@ -41,7 +44,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       });
     }
 
-    let booking = strapi.query("api::booking.booking").create({
+    let booking = await strapi.query("api::booking.booking").create({
       data: {
         ...ctx.request.body.data,
         patient: patient.id,
@@ -50,5 +53,18 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     });
 
     return { booking };
+  },
+
+  async updateStatusBooking(ctx) {
+    let booking = await strapi.query("api::booking.booking").update({
+      where: {
+        id: ctx.request.body.id,
+      },
+      data: {
+          status: ctx.request.body.status,
+      }
+    });
+
+    return {booking}
   }
 }));
