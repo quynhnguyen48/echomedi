@@ -27,6 +27,15 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
 
     return {bookings};
   },
+  async updateBooking(ctx) {
+    await strapi.query("api::booking.booking").delete({
+      where: {
+        id: ctx.request.body.data.id,
+      }
+    });
+
+    return await this.createBooking(ctx);
+  },
   async createBooking(ctx) {
     let patient;
     if (ctx.request.body.data.createNewPatient) {
@@ -39,7 +48,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     } else {
       patient = await strapi.query("api::patient.patient").findOne({
         where: {
-          phone: ctx.request.body.phone,
+          phone: ctx.request.body.data.phone,
         }
       });
     }

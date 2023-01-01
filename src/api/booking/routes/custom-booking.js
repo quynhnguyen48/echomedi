@@ -20,6 +20,15 @@ module.exports = {
     },
     {
       method: "POST",
+      path: "/bookings/updateBooking",
+      handler: "booking.updateBooking",
+      config: {
+        policies: [],
+        prefix: "",
+      },
+    },
+    {
+      method: "POST",
       path: "/bookings/getBookingWithRange",
       handler: "booking.getBookingWithRange",
       config: {
