@@ -49,7 +49,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     } else {
       patient = await strapi.query("api::patient.patient").findOne({
         where: {
-          id: ctx.request.body.data.patient_id,
+          id: ctx.request.body.data.patient,
         }
       });
     }
