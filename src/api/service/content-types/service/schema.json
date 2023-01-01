@@ -61,6 +61,15 @@
     "en_detail": {
       "pluginOptions": {},
       "type": "richtext"
+    },
+    "show_additional_fee": {
+      "type": "boolean"
+    },
+    "show_inquiry_form": {
+      "type": "boolean"
+    },
+    "show_booking_btn": {
+      "type": "boolean"
     }
   }
 }

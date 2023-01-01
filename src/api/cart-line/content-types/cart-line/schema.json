@@ -22,6 +22,11 @@
       "relation": "manyToOne",
       "target": "api::cart.cart",
       "inversedBy": "cart_lines"
+    },
+    "service": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service.service"
     }
   }
 }
