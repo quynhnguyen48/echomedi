@@ -68,6 +68,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::patient.patient"
+    },
+    "medical_record": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::medical-record.medical-record"
     }
   }
 }
