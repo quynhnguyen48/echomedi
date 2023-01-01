@@ -66,6 +66,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
   },
 
   async updateStatusBooking(ctx) {
+    console.log('update', ctx.request.body)
     let booking = await strapi.query("api::booking.booking").update({
       where: {
         id: ctx.request.body.id,
