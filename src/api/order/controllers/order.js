@@ -203,7 +203,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       let info = await transporter.sendMail({
         from: '<orders@echomedi.com>', // sender address
         to: ctx.state.user.email, // list of receivers
-        subject: "ECHO MEDI - Thông Tin Gói Thành Viên", // Subject line
+        subject: "ECHO MEDI - Xác Nhận Thanh Toán - [Mã thanh toán]", // Subject line
         text: "Xin chào", // plain text body
         html: `
           <p>Xin chào [Tên khách hàng],</p>
