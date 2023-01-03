@@ -75,6 +75,9 @@
       "relation": "oneToOne",
       "target": "api::booking.booking",
       "inversedBy": "medical_record"
+    },
+    "blood_pressure2": {
+      "type": "integer"
     }
   }
 }
