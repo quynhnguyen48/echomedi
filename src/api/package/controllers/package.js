@@ -319,14 +319,14 @@ module.exports = createCoreController('api::package.package',
           port: 465,
           secure: true, // true for 465, false for other ports
           auth: {
-            user: "inquiry@echomedi.com", // generated ethereal user
+            user: "noreply@echomedi.com", // generated ethereal user
             pass: "1026Echomedi@123", // generated ethereal password
           },
         });
 
         let info = await transporter.sendMail({
-          from: '<inquiry@echomedi.com>', // sender address
-          to: ctx.request.body.email, // list of receivers
+          from: '<noreply@echomedi.com>', // sender address
+          to: 'inquiry@echomedi.com', // list of receivers
           subject: "ECHO MEDI - Thông Tin Gói Thành Viên", // Subject line
           text: "Xin chào", // plain text body
           html: `
