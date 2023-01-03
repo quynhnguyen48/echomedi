@@ -47,6 +47,15 @@ module.exports = {
       },
       {
         method: "POST",
+        path: "/product/downloadMedicalRecord",
+        handler: "product.downloadMedicalRecord",
+        config: {
+          policies: [],
+          prefix: false,
+        },
+      },
+      {
+        method: "POST",
         path: "/product/generatePhieuCLS",
         handler: "product.generatePhieuCLS",
         config: {

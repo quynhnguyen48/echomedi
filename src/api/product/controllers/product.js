@@ -120,6 +120,77 @@ module.exports = createCoreController('api::product.product',
                 });
             return ({ user: us });
         },
+        async downloadMedicalRecord(ctx) {
+            let mr = await strapi
+                .query('api::medical-record.medical-record')
+                .findOne({
+                    where: { id: ctx.request.body.id },
+                    populate: { patient: true, booking: true }
+                });
+
+            const patient = mr.patient;
+            
+            const browser = await puppeteer.launch({
+                headless: true,
+            })
+
+            // create a new page
+            const page = await browser.newPage()
+
+            // set your html as the pages content
+            let html = fs.readFileSync(`${__dirname}/test3.html`, 'utf8');
+
+            const address = patient?.address
+            ? `${patient?.address?.address || ""}, ${patient?.address?.ward?.name || ""}, ${
+                patient?.address?.district?.name || ""
+              }, ${patient?.address?.province?.name || ""}`
+            : "-";
+
+            html = html.replace("[DAN_TOC]",  "Kinh");
+            html = html.replace("[GIOI_TINH]", patient.gender == "male" ? "Nam" : "Nữ");
+            html = html.replace("[FULL_NAME]", patient.full_name);
+            html = html.replace("[MACH]", mr.circuit);
+            html = html.replace("[NHIET_DO]", mr.temperature);
+            html = html.replace("[HUYET_AP]", mr.blood_pressure);
+            html = html.replace("[HUYET_AP2]", mr.blood_pressure);
+            html = html.replace("[NHIP_THO]", mr.respiratory_rate);
+            html = html.replace("[CHIEU_CAO]", mr.height);
+            html = html.replace("[CAN_NANG]", mr.weight);
+            html = html.replace("[BMI]", mr.bmi);
+            html = html.replace("[SPO2]", mr.spo2);
+            html = html.replace("[TINH_THANH]", ctx.request.body.province);
+            html = html.replace("[QUAN_HUYEN]", ctx.request.body.district);
+            html = html.replace("[XA_PHUONG]", ctx.request.body.ward);
+            html = html.replace("[SDT]", patient.phone);
+            html = html.replace("[ADDRESS]", address);
+            html = html.replace("[QUOC_GIA]", "VIETNAM");
+            html = html.replace("[NGAY_SINH]", patient.birthday);
+            html = html.replace("[QUOC_TICH]", "VIETNAM");
+            // html = html.replace("[NGHE_NGHIEP]", ctx.request.body.nghe_nghiep);
+            html = html.replace("[DIA_CHI]", address);
+            html = html.replace("[EMAIL]", patient.email);
+            html = html.replace("[LY_DO_VAO_VIEN]", mr.reasons_to_get_hospitalized);
+            html = html.replace("[HOI_BENH]", mr.inquiry);
+            html = html.replace("[KHAM_BENH]", mr.examination);
+            html = html.replace("[CHAN_DOAN]", mr.diagnose);
+            html = html.replace("[HUONG_DIEU_TRI]", mr.treatment_regimen);
+
+            await page.setContent(html, {
+                waitUntil: 'networkidle0'
+            })
+
+            var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
+
+            ctx.send(a);
+            a.on('close', async () => {
+                try {
+                    await page.close();
+                    await browser.close();
+                } catch (e) {
+
+                }
+            });
+        },
         async generatePDF(ctx) {
             const browser = await puppeteer.launch({
                 headless: true,
@@ -170,11 +241,8 @@ module.exports = createCoreController('api::product.product',
             ctx.send(a);
             a.on('close', async () => {
                 try {
-                    console.log('end')
                     await page.close();
-                    console.log('end1')
                     await browser.close();
-                    console.log('end2')
                 } catch (e) {
 
                 }
