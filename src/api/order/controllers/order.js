@@ -3,6 +3,7 @@ const utils = require('@strapi/utils');
 const moment = require("moment");
 const { ApplicationError, ValidationError } = utils.errors;
 
+
 /**
  *  order controller
  */
@@ -184,7 +185,18 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     ctx.send({url: vnpUrl});
   },
   async updateOrder(ctx) {
-    console.log('ctx', ctx);
+    // const filter = utils.convertQueryParams(ctx.request.query);
+    const params = ctx.request.query;
+    const order = await strapi.query('api::order.order').update({
+      where: {
+        code: params.vnp_OrderInfo
+      },
+      data: {
+          status: "ordered"
+      }
+    });
+    
+    return {order}
   },
   async getOrderHistory(ctx) {
     const { id } = ctx.state.user;
