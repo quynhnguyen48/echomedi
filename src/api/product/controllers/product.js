@@ -137,6 +137,7 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[MACH]", ctx.request.body.circuit);
             html = html.replace("[NHIET_DO]", ctx.request.body.temperature);
             html = html.replace("[HUYET_AP]", ctx.request.body.blood_pressure);
+            html = html.replace("[HUYET_AP2]", ctx.request.body.blood_pressure);
             html = html.replace("[NHIP_THO]", ctx.request.body.respiratory_rate);
             html = html.replace("[CHIEU_CAO]", ctx.request.body.height);
             html = html.replace("[CAN_NANG]", ctx.request.body.weight);
