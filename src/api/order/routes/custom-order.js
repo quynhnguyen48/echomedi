@@ -55,7 +55,7 @@ module.exports = {
       },
     },
     {
-      method: "POST",
+      method: "GET",
       path: "/updateOrder",
       handler: "order.updateOrder",
       config: {
