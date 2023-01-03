@@ -120,6 +120,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       .query('api::order.order')
       .create({
         data: {
+          paymentMethod: "vnpay",
           status: "draft",
           code: generateCode("ORD"),
           cart: cart.id,
