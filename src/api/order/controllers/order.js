@@ -128,6 +128,9 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
           num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
         }
       });
+
+    await strapi.plugins['users-permissions'].services.user.edit(id, { cart: null });
+
       
     const req = ctx.request;
 
@@ -264,13 +267,6 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
           total: totalPrice,
           num_of_prod: result.cart_lines ? result.cart_lines.length : 0,
         }
-      });
-
-    await strapi
-      .query('api::cart.cart')
-      .update({
-        where: { id: cart.id },
-        data: { users_permissions_user: null }
       });
 
     await strapi.plugins['users-permissions'].services.user.edit(id, { cart: null });
