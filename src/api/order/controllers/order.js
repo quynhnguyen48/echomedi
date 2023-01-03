@@ -266,6 +266,12 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         }
       });
 
+    await strapi
+      .query('api::cart.cart')
+      .update({
+        where: { id: cart.id },
+        data: { users_permissions_user: null }
+      });
 
     await strapi.plugins['users-permissions'].services.user.edit(id, { cart: null });
 
