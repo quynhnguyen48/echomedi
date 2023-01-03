@@ -2,6 +2,7 @@
 const utils = require('@strapi/utils');
 const moment = require("moment");
 const { ApplicationError, ValidationError } = utils.errors;
+const nodemailer = require("nodemailer");
 
 
 /**
