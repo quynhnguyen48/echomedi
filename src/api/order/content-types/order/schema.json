@@ -93,6 +93,9 @@
     },
     "num_of_prod": {
       "type": "integer"
+    },
+    "vnp_payload": {
+      "type": "json"
     }
   }
 }
