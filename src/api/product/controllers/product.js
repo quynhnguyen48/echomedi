@@ -85,6 +85,17 @@ module.exports = createCoreController('api::product.product',
         },
         async getCart(ctx) {
             const { user } = ctx.state;
+            let cart = await strapi
+                .query('api::cart.cart')
+                .findOne({
+                    where: { users_permissions_user: user.id }});
+
+            if (!cart) {
+                cart = await strapi
+                    .query('api::cart.cart')
+                    .create({ data: { users_permissions_user: user.id, publishedAt: new Date().toISOString() } });
+            }
+
             const us = await strapi
                 .query('api::cart.cart')
                 .findOne({
