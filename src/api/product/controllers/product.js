@@ -132,7 +132,7 @@ module.exports = createCoreController('api::product.product',
             let html = fs.readFileSync(`${__dirname}/test3.html`, 'utf8');
 
             html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
-            html = html.replace("[GIOI_TINH]", ctx.request.body.gender);
+            html = html.replace("[GIOI_TINH]", ctx.request.body.gender == "male" ? "Nam" : "Nữ");
             html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
             html = html.replace("[MACH]", ctx.request.body.circuit);
             html = html.replace("[NHIET_DO]", ctx.request.body.temperature);
@@ -150,10 +150,16 @@ module.exports = createCoreController('api::product.product',
             html = html.replace("[ADDRESS]", ctx.request.body.address);
             html = html.replace("[QUOC_GIA]", ctx.request.body.quoc_gia);
             html = html.replace("[NGAY_SINH]", ctx.request.body.ngay_sinh);
-            html = html.replace("[QUOC_TINH]", ctx.request.body.quoc_tich);
+            html = html.replace("[QUOC_TICH]", ctx.request.body.quoc_tich);
             html = html.replace("[NGHE_NGHIEP]", ctx.request.body.nghe_nghiep);
             html = html.replace("[DIA_CHI]", ctx.request.body.address);
             html = html.replace("[EMAIL]", ctx.request.body.email);
+            html = html.replace("[LY_DO_VAO_VIEN]", ctx.request.body.ly_do_vao_vien);
+            html = html.replace("[HOI_BENH]", ctx.request.body.hoi_benh);
+            html = html.replace("[KHAM_BENH]", ctx.request.body.kham_benh);
+            html = html.replace("[CHAN_DOAN]", ctx.request.body.chan_doan);
+            html = html.replace("[HUONG_DIEU_TRI]", ctx.request.body.huong_dieu_tri);
+
 
             await page.setContent(html, {
                 waitUntil: 'networkidle0'

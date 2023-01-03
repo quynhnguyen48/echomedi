@@ -73,7 +73,7 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::medical-record.medical-record",
-      "inversedBy": "booking"
+      "mappedBy": "booking"
     }
   }
 }

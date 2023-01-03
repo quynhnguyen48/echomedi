@@ -78,6 +78,9 @@
     },
     "blood_pressure2": {
       "type": "integer"
+    },
+    "past_medical_history": {
+      "type": "string"
     }
   }
 }
