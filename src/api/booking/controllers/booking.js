@@ -18,7 +18,8 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
         bookingDate: {
           $gte: new Date(ctx.request.body.data.startDate),
           $lte: new Date(ctx.request.body.data.endDate),
-        }
+        },
+        branch: ctx.request.body.data.branch,
       },
       populate: {
         patient: true,
