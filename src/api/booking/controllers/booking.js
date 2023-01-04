@@ -37,7 +37,36 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
 
     return await this.createBooking(ctx);
   },
+
   async createBooking(ctx) {
+    let patient;
+    if (ctx.request.body.data.createNewPatient) {
+      patient = await strapi.query("api::patient.patient").create({
+        data: {
+          ...ctx.request.body.data,
+          publishedAt: new Date(),
+        }
+      });
+    } else {
+      patient = await strapi.query("api::patient.patient").findOne({
+        where: {
+          id: ctx.request.body.data.patient,
+        }
+      });
+    }
+
+    let booking = await strapi.query("api::booking.booking").create({
+      data: {
+        ...ctx.request.body.data,
+        patient: patient.id,
+        publishedAt: new Date(),
+      }
+    });
+
+    return { booking };
+  },
+
+  async createBookingFromWeb(ctx) {
     let patient;
     if (ctx.request.body.data.createNewPatient) {
       patient = await strapi.query("api::patient.patient").create({
