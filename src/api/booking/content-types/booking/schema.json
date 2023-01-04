@@ -74,6 +74,14 @@
       "relation": "oneToOne",
       "target": "api::medical-record.medical-record",
       "mappedBy": "booking"
+    },
+    "branch": {
+      "type": "enumeration",
+      "enum": [
+        "q7",
+        "q2",
+        "binhduong"
+      ]
     }
   }
 }
