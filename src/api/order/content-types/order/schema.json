@@ -96,6 +96,9 @@
     },
     "vnp_payload": {
       "type": "json"
+    },
+    "vnp_payment_url_params": {
+      "type": "json"
     }
   }
 }
