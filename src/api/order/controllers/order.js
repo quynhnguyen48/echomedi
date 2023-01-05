@@ -232,7 +232,26 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async updateOrder(ctx) {
     // const filter = utils.convertQueryParams(ctx.request.query);
     const params = ctx.request.query;
-    const order = await strapi.query('api::order.order').update({
+
+    const order = strapi.query('api::order.order').findOne({
+      where: {
+        code: params.vnp_OrderInfo
+      }});
+
+    if (params.vnp_SecureHash != order.vnp_payment_url_params.vnp_SecureHash) {
+      return {"Message":"Invalid Signature","RspCode":"97"}	
+    }
+    if (params.vnp_TxnRef != order.vnp_payment_url_params.vnp_TxnRef) {
+      return {"Message":"Order not found","RspCode":"01"}	
+    }
+    if (params.vnp_Amount != order.vnp_payment_url_params.vnp_Amount) {
+      return {"Message":"Invalid amount","RspCode":"04"}	
+    }
+    if (order.status == "ordered") {
+      return {"Message":"Order already confirmed","RspCode":"02"}	
+    }
+    
+    await strapi.query('api::order.order').update({
       where: {
         code: params.vnp_OrderInfo
       },
