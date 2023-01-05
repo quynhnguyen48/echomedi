@@ -4,7 +4,8 @@
   "info": {
     "singularName": "patient",
     "pluralName": "patients",
-    "displayName": "Patient"
+    "displayName": "Patient",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,7 +16,7 @@
       "type": "string"
     },
     "birthday": {
-      "type": "date"
+      "type": "datetime"
     },
     "gender": {
       "type": "string"
