@@ -269,6 +269,13 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       return {"Message":"Order already confirmed","RspCode":"02"}	
     }
 
+    var ipAddr = req.headers['x-forwarded-for'] ||
+        req.connection?.remoteAddress ||
+        req.socket?.remoteAddress ||
+        req.connection?.socket?.remoteAddress;
+    
+    params["ipAddr"] = ipAddr;
+
     await strapi.query('api::order.order').update({
       where: {
         code: params.vnp_OrderInfo
