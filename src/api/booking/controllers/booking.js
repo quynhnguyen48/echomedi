@@ -13,14 +13,18 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
     return strapi.query("api::booking.booking").count({ where: query });
   },
   async getBookingWithRange(ctx) {
-    let bookings = await strapi.query("api::booking.booking").findMany({
-      where: {
-        bookingDate: {
-          $gte: new Date(ctx.request.body.data.startDate),
-          $lte: new Date(ctx.request.body.data.endDate),
-        },
-        branch: ctx.request.body.data.branch,
+    let where = {
+      bookingDate: {
+        $gte: new Date(ctx.request.body.data.startDate),
+        $lte: new Date(ctx.request.body.data.endDate),
       },
+      branch: ctx.request.body.data.branch,
+    };
+    if (ctx.request.body.data.status) {
+      where.status = ctx.request.body.data.status;
+    }
+    let bookings = await strapi.query("api::booking.booking").findMany({
+      where,
       populate: {
         patient: true,
         medical_record: true,
