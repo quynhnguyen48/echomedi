@@ -238,7 +238,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       }
     });
     
-    return {order}
+    return {"Message":"Confirm Success","RspCode":"00"}	
   },
   async getOrderHistory(ctx) {
     const { id } = ctx.state.user;
