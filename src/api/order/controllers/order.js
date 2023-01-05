@@ -234,7 +234,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         code: params.vnp_OrderInfo
       },
       data: {
-          status: "ordered"
+          status: "ordered",
+          vnp_payload: params
       }
     });
     
