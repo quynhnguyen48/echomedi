@@ -233,7 +233,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     // const filter = utils.convertQueryParams(ctx.request.query);
     const params = ctx.request.query;
 
-    const order = strapi.query('api::order.order').findOne({
+    const order = await strapi.query('api::order.order').findOne({
       where: {
         code: params.vnp_OrderInfo
       }});
