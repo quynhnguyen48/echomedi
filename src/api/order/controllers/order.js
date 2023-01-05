@@ -121,7 +121,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     await strapi.plugins['users-permissions'].services.user.edit(id, { cart: null });
 
-      
+    
+    var orderCode = generateCode("ORD");
     const req = ctx.request;
 
     var ipAddr = req.headers['x-forwarded-for'] ||
@@ -132,14 +133,12 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var tmnCode = "ECHOMEDI";
     var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
     var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    var returnUrl = "http://echomedi.me/order_detail/?code=" + order.code;
+    var returnUrl = "http://echomedi.me/order_detail/?code=" + orderCode;
 
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
-    var orderId = moment().format('hhmmss') + "1";
     var amount = "1000000";
     var bankCode = "";
     
-    var orderInfo = order.code;
     var orderType = "billpayment";
     var locale = req.body.language;
     if(locale === null || locale === ''){
@@ -153,8 +152,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     // vnp_Params['vnp_Merchant'] = ''
     vnp_Params['vnp_Locale'] = "vn";
     vnp_Params['vnp_CurrCode'] = currCode;
-    vnp_Params['vnp_TxnRef'] = orderInfo;
-    vnp_Params['vnp_OrderInfo'] = orderInfo;
+    vnp_Params['vnp_TxnRef'] = orderCode;
+    vnp_Params['vnp_OrderInfo'] = orderCode;
     vnp_Params['vnp_OrderType'] = orderType;
     vnp_Params['vnp_Amount'] = amount * 100;
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
