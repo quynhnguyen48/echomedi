@@ -238,6 +238,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         code: params.vnp_OrderInfo
       }});
 
+    console.log('order', order)
+
     if (params.vnp_SecureHash != order.vnp_payment_url_params.vnp_SecureHash) {
       return {"Message":"Invalid Signature","RspCode":"97"}	
     }
@@ -250,7 +252,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     if (order.status == "ordered") {
       return {"Message":"Order already confirmed","RspCode":"02"}	
     }
-    
+
     await strapi.query('api::order.order').update({
       where: {
         code: params.vnp_OrderInfo
