@@ -181,7 +181,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         data: {
           paymentMethod: "vnpay",
           status: "draft",
-          code: generateCode("ORD"),
+          code: orderCode,
           cart: cart.id,
           users_permissions_user: id,
           publishedAt: new Date().toISOString(),
