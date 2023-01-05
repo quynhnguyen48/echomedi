@@ -256,7 +256,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var hmac = crypto.createHmac("sha512", secretKey);
     var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");   
 
-    if (secureHash === signed) {
+    if (secureHash !== signed) {
       return {"Message":"Invalid Signature","RspCode":"97"}	
     }
     if (params.vnp_TxnRef != order.vnp_payment_url_params.vnp_TxnRef) {
