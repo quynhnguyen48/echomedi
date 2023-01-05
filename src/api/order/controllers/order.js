@@ -247,9 +247,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     vnp_Params = sortObject(vnp_Params);
 
-    var config = require('config');
-    var tmnCode = config.get('vnp_TmnCode');
-    var secretKey = config.get('vnp_HashSecret');
+    var tmnCode = "ECHOMEDI";
+    var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
 
     var querystring = require('qs');
     var signData = querystring.stringify(vnp_Params, { encode: false });
