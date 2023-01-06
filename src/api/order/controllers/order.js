@@ -233,11 +233,6 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     // const filter = utils.convertQueryParams(ctx.request.query);
     const params = ctx.request.query;
 
-    const order = await strapi.query('api::order.order').findOne({
-      where: {
-        code: params.vnp_OrderInfo
-      }});
-
     var vnp_Params = ctx.request.query;
 
     var secureHash = vnp_Params['vnp_SecureHash'];
@@ -270,6 +265,15 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         data: JSON.stringify(params)
       }
     });
+
+    const order = await strapi.query('api::order.order').findOne({
+      where: {
+        code: params.vnp_OrderInfo
+      }});
+    
+    if (!order) {
+      return {"Message":"Order not found","RspCode":"01"}	
+    }
 
     if (secureHash !== signed) {
       return {"Message":"Invalid Signature","RspCode":"97"}	
