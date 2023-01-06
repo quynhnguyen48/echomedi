@@ -267,19 +267,19 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     let result = null;
     
     if (!order) {
-      return {"Message":"Order not found","RspCode":"01"}	
+      result = {"Message":"Order not found","RspCode":"01"}	
     }
     else if (secureHash !== signed) {
-      return {"Message":"Invalid Signature","RspCode":"97"}	
+      result = {"Message":"Invalid Signature","RspCode":"97"}	
     }
     else if (params.vnp_TxnRef != order.vnp_payment_url_params.vnp_TxnRef) {
-      return {"Message":"Order not found","RspCode":"01"}	
+      result = {"Message":"Order not found","RspCode":"01"}	
     }
     else if (params.vnp_Amount != order.vnp_payment_url_params.vnp_Amount) {
-      return {"Message":"Invalid amount","RspCode":"04"}	
+      result = {"Message":"Invalid amount","RspCode":"04"}	
     }
     else if (order.status == "ordered") {
-      return {"Message":"Order already confirmed","RspCode":"02"}	
+      result = {"Message":"Order already confirmed","RspCode":"02"}	
     }
 
     params["response"] = result;
