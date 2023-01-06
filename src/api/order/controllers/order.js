@@ -256,6 +256,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var hmac = crypto.createHmac("sha512", secretKey);
     var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");   
 
+    const req = ctx.request;
     var ipAddr = req.headers['x-forwarded-for'] ||
         req.connection?.remoteAddress ||
         req.socket?.remoteAddress ||
@@ -282,10 +283,6 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     if (order.status == "ordered") {
       return {"Message":"Order already confirmed","RspCode":"02"}	
     }
-
-    const req = ctx.request;
-    
-    
 
     await strapi.query('api::order.order').update({
       where: {
