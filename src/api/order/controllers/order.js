@@ -131,8 +131,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         req.connection?.socket?.remoteAddress;
 
     var tmnCode = "ECHOMEDI";
-    var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
-    var vnpUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    var secretKey = "KM349Y43X9G7VHI6NWZU9MCENQ0Q5IPK";
+    var vnpUrl = "https://pay.vnpay.vn/vpcpay.html";
     var returnUrl = "http://echomedi.me/order_detail/?code=" + orderCode;
 
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
@@ -243,7 +243,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     vnp_Params = sortObject(vnp_Params);
 
     var tmnCode = "ECHOMEDI";
-    var secretKey = "KXFENCKEXAUHNZCZXDBURGCJTHHTKHYY";
+    var secretKey = "KM349Y43X9G7VHI6NWZU9MCENQ0Q5IPK";
 
     var querystring = require('qs');
     var signData = querystring.stringify(vnp_Params, { encode: false });
