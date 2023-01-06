@@ -259,34 +259,39 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     params["ipAddr"] = ipAddr;
 
-    await strapi.query('api::log.log').create({
-      data: {
-        message: "updateOrder",
-        data: JSON.stringify(params)
-      }
-    });
-
     const order = await strapi.query('api::order.order').findOne({
       where: {
         code: params.vnp_OrderInfo
       }});
+
+    let result = null;
     
     if (!order) {
       return {"Message":"Order not found","RspCode":"01"}	
     }
-
-    if (secureHash !== signed) {
+    else if (secureHash !== signed) {
       return {"Message":"Invalid Signature","RspCode":"97"}	
     }
-    if (params.vnp_TxnRef != order.vnp_payment_url_params.vnp_TxnRef) {
+    else if (params.vnp_TxnRef != order.vnp_payment_url_params.vnp_TxnRef) {
       return {"Message":"Order not found","RspCode":"01"}	
     }
-    if (params.vnp_Amount != order.vnp_payment_url_params.vnp_Amount) {
+    else if (params.vnp_Amount != order.vnp_payment_url_params.vnp_Amount) {
       return {"Message":"Invalid amount","RspCode":"04"}	
     }
-    if (order.status == "ordered") {
+    else if (order.status == "ordered") {
       return {"Message":"Order already confirmed","RspCode":"02"}	
     }
+
+    params["response"] = result;
+
+    await strapi.query('api::log.log').create({
+      data: {
+        message: "updateOrder",
+        data: params,
+      }
+    });
+
+    if (result != null) return result;
 
     await strapi.query('api::order.order').update({
       where: {
