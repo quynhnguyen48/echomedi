@@ -1,4 +1,8 @@
 module.exports = ({ env }) => ({
+  wysiwyg: {
+    enabled: true,
+    resolve: "./src/plugins/wysiwyg", // path to plugin folder
+  },
   email: {
     config: {
       provider: "nodemailer",
