@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prescriptions",
+  "info": {
+    "singularName": "prescription",
+    "pluralName": "prescriptions",
+    "displayName": "Prescription",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "medicalRecord": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::medical-record.medical-record",
+      "inversedBy": "prescription"
+    },
+    "message": {
+      "type": "text"
+    },
+    "reExaminationDate": {
+      "type": "datetime"
+    },
+    "Drugs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "prescription-drug.prescription-drug"
+    }
+  }
+}

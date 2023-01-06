@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_prescription_drug_prescription_drugs",
+  "info": {
+    "displayName": "Prescription Drug",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "drug": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::drug.drug"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "morningAmount": {
+      "type": "integer"
+    },
+    "noonAmount": {
+      "type": "integer"
+    },
+    "afternoonAmount": {
+      "type": "integer"
+    },
+    "eveningAmount": {
+      "type": "integer"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "usage": {
+      "type": "text"
+    },
+    "numberOfDays": {
+      "type": "integer"
+    }
+  }
+}

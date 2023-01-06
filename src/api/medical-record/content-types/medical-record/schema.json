@@ -81,6 +81,12 @@
     },
     "past_medical_history": {
       "type": "string"
+    },
+    "prescription": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prescription.prescription",
+      "mappedBy": "medicalRecord"
     }
   }
 }
