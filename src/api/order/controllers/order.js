@@ -256,6 +256,20 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var hmac = crypto.createHmac("sha512", secretKey);
     var signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");   
 
+    var ipAddr = req.headers['x-forwarded-for'] ||
+        req.connection?.remoteAddress ||
+        req.socket?.remoteAddress ||
+        req.connection?.socket?.remoteAddress;
+
+    params["ipAddr"] = ipAddr;
+
+    await strapi.query('api::log.log').create({
+      data: {
+        message: "updateOrder",
+        data: JSON.stringify(params)
+      }
+    });
+
     if (secureHash !== signed) {
       return {"Message":"Invalid Signature","RspCode":"97"}	
     }
@@ -270,19 +284,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     }
 
     const req = ctx.request;
-    var ipAddr = req.headers['x-forwarded-for'] ||
-        req.connection?.remoteAddress ||
-        req.socket?.remoteAddress ||
-        req.connection?.socket?.remoteAddress;
     
-    params["ipAddr"] = ipAddr;
-
-    await strapi.query('api::log.log').create({
-      data: {
-        message: "updateOrder",
-        data: JSON.stringify(params)
-      }
-    });
+    
 
     await strapi.query('api::order.order').update({
       where: {
