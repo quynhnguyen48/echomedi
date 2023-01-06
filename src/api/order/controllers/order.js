@@ -277,6 +277,13 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     
     params["ipAddr"] = ipAddr;
 
+    await strapi.query('api::log.log').create({
+      data: {
+        message: "updateOrder",
+        data: JSON.stringify(params)
+      }
+    });
+
     await strapi.query('api::order.order').update({
       where: {
         code: params.vnp_OrderInfo
