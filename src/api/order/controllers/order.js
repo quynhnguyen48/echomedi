@@ -293,17 +293,22 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     if (result != null) return result;
 
+    let status = "";
+    if (params.vnp_ResponseCode == "00" && params.vnp_TransactionStatus == "00") {
+      status = "ordered";
+    }
+
     await strapi.query('api::order.order').update({
       where: {
         code: params.vnp_OrderInfo
       },
       data: {
-          status: "ordered",
+          status,
           vnp_payload: params
       }
     });
-    
-    return {"Message":"Confirm Success","RspCode":"00"}	
+
+    return {"Message":"Confirm Success","RspCode":"00"}; 
   },
   async getOrderHistory(ctx) {
     const { id } = ctx.state.user;
