@@ -29,6 +29,7 @@ module.exports = createCoreController('api::drug.drug', ({ strapi }) => ({
                 type: lines[i][2],
                 ingredient: lines[i][4],
                 stock: parseInt(lines[i][12].split(" ")[0]),
+                unit: lines[i][12].split(" ")[1],
                 publishedAt: new Date(),
             })
         }
