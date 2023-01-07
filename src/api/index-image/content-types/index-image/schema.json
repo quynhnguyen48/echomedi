@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "index_images",
+  "info": {
+    "singularName": "index-image",
+    "pluralName": "index-images",
+    "displayName": "Index Image"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
