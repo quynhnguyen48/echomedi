@@ -9,34 +9,68 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::drug.drug', ({ strapi }) => ({
     async bulkCreate(ctx) {
 
-        await strapi.query("api::drug.drug").deleteMany(
-            {
-                where: {
-                    code: {
-                      $startsWith: 'H',
-                    },
-                },
-            }
-        );
+        // await strapi.query("api::drug.drug").deleteMany(
+        //     {
+        //         where: {
+        //             code: {
+        //               $startsWith: 'H',
+        //             },
+        //         },
+        //     }
+        // );
 
         let data = [];
         const lines = ctx.request.body.data;
 
         for (let i = 7; i < lines.length; ++i) {
-            data.push({
-                code: lines[i][0],
-                label: lines[i][1],
-                type: lines[i][2],
-                ingredient: lines[i][4],
-                stock: parseInt(lines[i][12].split(" ")[0]),
-                unit: lines[i][12].split(" ")[1],
-                publishedAt: new Date(),
-            })
+
+            const drug = await strapi.db.query('api::drug.drug').findOne({
+                where: {
+                    code: lines[i][0],
+                }
+            });
+
+            console.log('drug', drug)
+
+            if (!drug) {
+                await strapi.db.query('api::drug.drug').create({
+                    data: {
+                        code: lines[i][0],
+                        label: lines[i][1],
+                        type: lines[i][2],
+                        ingredient: lines[i][4],
+                        stock: parseInt(lines[i][12].split(" ")[0]),
+                        unit: lines[i][12].split(" ")[1],
+                        publishedAt: new Date(),
+                    }
+                });
+            } else {
+                console.log('update')
+                await strapi.db.query('api::drug.drug').update({
+                    where: {
+                        code: lines[i][0],
+                    },
+                    data: {
+                        stock: parseInt(lines[i][12].split(" ")[0]),
+                    }
+                });
+            }
+
+            // data.push({
+            //     code: lines[i][0],
+            //     label: lines[i][1],
+            //     type: lines[i][2],
+            //     ingredient: lines[i][4],
+            //     stock: parseInt(lines[i][12].split(" ")[0]),
+            //     unit: lines[i][12].split(" ")[1],
+            //     publishedAt: new Date(),
+            // })
         }
 
-        await strapi.db.query('api::drug.drug').createMany({
-            data,
-        });
+
+        // await strapi.db.query('api::drug.drug').createMany({
+        //     data,
+        // });
         return {ok: true}
         // return strapi.query("api::booking.booking").count({ where: query });
     },
