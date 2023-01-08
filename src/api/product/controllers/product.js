@@ -499,9 +499,27 @@ module.exports = createCoreController('api::product.product',
 
             let order = await strapi
                 .query('api::medical-record.medical-record')
-                .findOne({ where: { id: ctx.request.body.id } });
+                .findOne({ 
+                    where: { id: ctx.request.body.id },
+                    populate: {
+                        prescription: {
+                            populate: {
+                                Drugs: {
+                                    populate: {
+                                        drug: true,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
 
-            let services = JSON.parse(order.services);
+            
+            const drugs = order.prescription.Drugs
+
+            console.log('order', order.prescription.Drugs);
+
+            // let services = JSON.parse(order.services);
             // let bundle_services = JSON.parse(order.bundle_services);
 
             // create a new page
@@ -523,20 +541,20 @@ module.exports = createCoreController('api::product.product',
                 waitUntil: 'networkidle0'
             });
 
-            let bundle_services = JSON.parse(order.bundle_services);
-            bundle_services.forEach(b => {
-                b.attributes.medical_services.data.forEach(ms => {
-                    ms.attributes.combo = b.attributes.label;
-                    services.push(ms);
-                })
-            })
+            // let bundle_services = JSON.parse(order.bundle_services);
+            // bundle_services.forEach(b => {
+            //     b.attributes.medical_services.data.forEach(ms => {
+            //         ms.attributes.combo = b.attributes.label;
+            //         services.push(ms);
+            //     })
+            // })
 
-            const groupByCategory = services.reduce((group, product) => {
-                const { host } = product.attributes;
-                group[host] = group[host] ?? [];
-                group[host].push(product);
-                return group;
-            }, {});
+            // const groupByCategory = services.reduce((group, product) => {
+            //     const { host } = product.attributes;
+            //     group[host] = group[host] ?? [];
+            //     group[host].push(product);
+            //     return group;
+            // }, {});
 
 
 
@@ -547,37 +565,30 @@ module.exports = createCoreController('api::product.product',
             });
 
 
-            // await page.evaluate((groupByCategory, bs) => {
-            //     let tableContainer = document.getElementById('table-container');
-            //     var a = document.getElementById('table');
-            //     Object.entries(groupByCategory).forEach(entry => {
-            //         const [key, value] = entry;
-            //         var tr = document.createElement("tr");
-            //         var td1 = document.createElement("td");
-            //         td1.className = "bold";
-            //         td1.innerHTML = key;
-            //         tr.append(td1);
-            //         a.prepend(tr);
-
-            //         value.forEach(s => {
-            //             var tr = document.createElement("tr");
-            //             var td1 = document.createElement("td");
-            //             td1.innerHTML = s.attributes.label;
-            //             var td2 = document.createElement("td");
-            //             td2.innerHTML = s.attributes.group_service;
-            //             var td3 = document.createElement("td");
-            //             td3.innerHTML = "";
-            //             tr.append(td1);
-            //             tr.append(td2);
-            //             tr.append(td3);
-            //             a.append(tr);
-            //         });
-
-            //         var b = a.cloneNode();
-            //         tableContainer.append(b);
-            //         a = b;
-            //     });
-            // }, groupByCategory);
+            await page.evaluate((drugs, bs) => {
+                let tableContainer = document.getElementById('table-container');
+                var a = document.getElementById('table');
+                drugs.forEach(s => {
+                    var tr = document.createElement("tr");
+                    var td1 = document.createElement("td");
+                    td1.innerHTML = s.drug.code;
+                    var td2 = document.createElement("td");
+                    td2.innerHTML = s.drug.label;
+                    var td3 = document.createElement("td");
+                    td3.innerHTML = s.drug.unit;
+                    var td4 = document.createElement("td");
+                    td4.classList.add('frequency');
+                    td4.innerHTML = `${s.morningAmount}-${s.noonAmount}-${s.afternoonAmount}-${s.eveningAmount}`;
+                    var td5 = document.createElement("td");
+                    td5.innerHTML = s.usage;
+                    tr.append(td1);
+                    tr.append(td2);
+                    tr.append(td4);
+                    tr.append(td3);
+                    tr.append(td5);
+                    a.append(tr);
+                });
+            }, drugs);
 
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
             ctx.send(a);
