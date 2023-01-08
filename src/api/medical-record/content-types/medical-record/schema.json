@@ -87,6 +87,9 @@
       "relation": "oneToOne",
       "target": "api::prescription.prescription",
       "mappedBy": "medicalRecord"
+    },
+    "testResults": {
+      "type": "json"
     }
   }
 }
