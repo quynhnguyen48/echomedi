@@ -500,5 +500,111 @@ module.exports = createCoreController('api::product.product',
 
                 }
             });
+        },
+        async generatePrescription(ctx) {
+            const browser = await puppeteer.launch({
+                headless: true
+            });
+
+            const data = [{ "id": 385, "attributes": { "label": "Gonorrhea PCR (Xét nghiệm PCR chẩn đoán bệnh Lậu)", "createdAt": "2022-12-24T09:18:42.169Z", "updatedAt": "2022-12-24T09:18:42.169Z", "publishedAt": "2022-12-24T09:18:42.167Z", "code": "XNMD014", "host": "Nam SG", "price": 280000, "group_service": "Xét nghiệm dịch tiết" } }];
+
+            let order = await strapi
+                .query('api::medical-record.medical-record')
+                .findOne({ where: { id: ctx.request.body.id } });
+
+            let services = JSON.parse(order.services);
+            // let bundle_services = JSON.parse(order.bundle_services);
+
+            // create a new page
+            const page = await browser.newPage();
+            // set your html as the pages content
+            let html = fs.readFileSync(`${__dirname}/drug.html`, 'utf8');
+
+            // html = html.replace("[DAN_TOC]", ctx.request.body.dan_toc);
+            // html = html.replace("[FULL_NAME]", ctx.request.body.full_name);
+            // html = html.replace("[MACH]", ctx.request.body.mach);
+            // html = html.replace("[NHIET_DO]", ctx.request.body.nhiet_do);
+            // html = html.replace("[HUYET_AP]", ctx.request.body.huyet_ap);
+            // html = html.replace("[NHIP_THO]", ctx.request.body.nhip_tho);
+            // html = html.replace("[CHIEU_CAO]", ctx.request.body.chieu_cao);
+            // html = html.replace("[CAN_NANG]", ctx.request.body.can_nang);
+            // html = html.replace("[BMI]", ctx.request.body.bmi);
+            // html = html.replace("[SPO2]", ctx.request.body.spo2);
+            await page.setContent(html, {
+                waitUntil: 'networkidle0'
+            });
+
+            let bundle_services = JSON.parse(order.bundle_services);
+            bundle_services.forEach(b => {
+                b.attributes.medical_services.data.forEach(ms => {
+                    ms.attributes.combo = b.attributes.label;
+                    services.push(ms);
+                })
+            })
+            console.log('bundle_services', services);
+
+            const groupByCategory = services.reduce((group, product) => {
+                const { host } = product.attributes;
+                group[host] = group[host] ?? [];
+                group[host].push(product);
+                return group;
+            }, {});
+
+            console.log('groupByCategory', groupByCategory)
+
+
+            page.on('console', async (msg) => {
+                const msgArgs = msg.args();
+                for (let i = 0; i < msgArgs.length; ++i) {
+                    console.log(await msgArgs[i].jsonValue());
+                }
+            });
+
+
+            await page.evaluate((groupByCategory, bs) => {
+                let tableContainer = document.getElementById('table-container');
+                var a = document.getElementById('table');
+                Object.entries(groupByCategory).forEach(entry => {
+                    const [key, value] = entry;
+                    var tr = document.createElement("tr");
+                    var td1 = document.createElement("td");
+                    td1.className = "bold";
+                    td1.innerHTML = key;
+                    tr.append(td1);
+                    a.prepend(tr);
+
+                    value.forEach(s => {
+                        var tr = document.createElement("tr");
+                        var td1 = document.createElement("td");
+                        td1.innerHTML = s.attributes.label;
+                        var td2 = document.createElement("td");
+                        td2.innerHTML = s.attributes.group_service;
+                        var td3 = document.createElement("td");
+                        td3.innerHTML = "";
+                        tr.append(td1);
+                        tr.append(td2);
+                        tr.append(td3);
+                        a.append(tr);
+                    });
+
+                    var b = a.cloneNode();
+                    tableContainer.append(b);
+                    a = b;
+                });
+            }, groupByCategory);
+
+            var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
+            ctx.send(a);
+            a.on('close', async () => {
+                try {
+                    console.log('end')
+                    await page.close();
+                    console.log('end1')
+                    await browser.close();
+                    console.log('end2')
+                } catch (e) {
+
+                }
+            });
         }
     }));

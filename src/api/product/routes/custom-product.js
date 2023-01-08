@@ -71,6 +71,15 @@ module.exports = {
           policies: [],
           prefix: false,
         },
+      },
+      {
+        method: "POST",
+        path: "/product/generatePrescription",
+        handler: "product.generatePrescription",
+        config: {
+          policies: [],
+          prefix: false,
+        },
       }
     ]
 }  
