@@ -561,37 +561,37 @@ module.exports = createCoreController('api::product.product',
             });
 
 
-            await page.evaluate((groupByCategory, bs) => {
-                let tableContainer = document.getElementById('table-container');
-                var a = document.getElementById('table');
-                Object.entries(groupByCategory).forEach(entry => {
-                    const [key, value] = entry;
-                    var tr = document.createElement("tr");
-                    var td1 = document.createElement("td");
-                    td1.className = "bold";
-                    td1.innerHTML = key;
-                    tr.append(td1);
-                    a.prepend(tr);
+            // await page.evaluate((groupByCategory, bs) => {
+            //     let tableContainer = document.getElementById('table-container');
+            //     var a = document.getElementById('table');
+            //     Object.entries(groupByCategory).forEach(entry => {
+            //         const [key, value] = entry;
+            //         var tr = document.createElement("tr");
+            //         var td1 = document.createElement("td");
+            //         td1.className = "bold";
+            //         td1.innerHTML = key;
+            //         tr.append(td1);
+            //         a.prepend(tr);
 
-                    value.forEach(s => {
-                        var tr = document.createElement("tr");
-                        var td1 = document.createElement("td");
-                        td1.innerHTML = s.attributes.label;
-                        var td2 = document.createElement("td");
-                        td2.innerHTML = s.attributes.group_service;
-                        var td3 = document.createElement("td");
-                        td3.innerHTML = "";
-                        tr.append(td1);
-                        tr.append(td2);
-                        tr.append(td3);
-                        a.append(tr);
-                    });
+            //         value.forEach(s => {
+            //             var tr = document.createElement("tr");
+            //             var td1 = document.createElement("td");
+            //             td1.innerHTML = s.attributes.label;
+            //             var td2 = document.createElement("td");
+            //             td2.innerHTML = s.attributes.group_service;
+            //             var td3 = document.createElement("td");
+            //             td3.innerHTML = "";
+            //             tr.append(td1);
+            //             tr.append(td2);
+            //             tr.append(td3);
+            //             a.append(tr);
+            //         });
 
-                    var b = a.cloneNode();
-                    tableContainer.append(b);
-                    a = b;
-                });
-            }, groupByCategory);
+            //         var b = a.cloneNode();
+            //         tableContainer.append(b);
+            //         a = b;
+            //     });
+            // }, groupByCategory);
 
             var a = await page.createPDFStream({ printBackground: true, width: "1118px", height: "1685px" });
             ctx.send(a);
