@@ -324,7 +324,7 @@ module.exports = createCoreController('api::package.package',
   
           let info = await transporter.sendMail({
             from: '<noreply@echomedi.com>', // sender address
-            to: 'contact@echomedi.com', // list of receivers
+            to: [email, 'contact@echomedi.com'], // list of receivers
             subject: "ECHO MEDI", // Subject line
             text: "Xin chào", // plain text body
             html: emailTemplate, // html body
