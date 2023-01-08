@@ -4,7 +4,8 @@
   "info": {
     "singularName": "drug",
     "pluralName": "drugs",
-    "displayName": "Drug"
+    "displayName": "Drug",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,12 @@
       "type": "integer"
     },
     "unit": {
+      "type": "string"
+    },
+    "label_i": {
+      "type": "string"
+    },
+    "ingredient_i": {
       "type": "string"
     }
   }
