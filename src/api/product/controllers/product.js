@@ -279,12 +279,10 @@ module.exports = createCoreController('api::product.product',
                 waitUntil: 'domcontentloaded'
             });
 
-            // console.log('bundle_services', order.bundle_services)
 
             page.on('console', async (msg) => {
                 const msgArgs = msg.args();
                 for (let i = 0; i < msgArgs.length; ++i) {
-                    console.log(await msgArgs[i].jsonValue());
                 }
             });
 
@@ -385,11 +383,8 @@ module.exports = createCoreController('api::product.product',
             ctx.send(a);
             a.on('close', async () => {
                 try {
-                    console.log('end')
                     await page.close();
-                    console.log('end1')
                     await browser.close();
-                    console.log('end2')
                 } catch (e) {
 
                 }
@@ -435,7 +430,6 @@ module.exports = createCoreController('api::product.product',
                     services.push(ms);
                 })
             })
-            console.log('bundle_services', services);
 
             const groupByCategory = services.reduce((group, product) => {
                 const { host } = product.attributes;
@@ -444,13 +438,11 @@ module.exports = createCoreController('api::product.product',
                 return group;
             }, {});
 
-            console.log('groupByCategory', groupByCategory)
 
 
             page.on('console', async (msg) => {
                 const msgArgs = msg.args();
                 for (let i = 0; i < msgArgs.length; ++i) {
-                    console.log(await msgArgs[i].jsonValue());
                 }
             });
 
@@ -491,11 +483,8 @@ module.exports = createCoreController('api::product.product',
             ctx.send(a);
             a.on('close', async () => {
                 try {
-                    console.log('end')
                     await page.close();
-                    console.log('end1')
                     await browser.close();
-                    console.log('end2')
                 } catch (e) {
 
                 }
@@ -541,7 +530,6 @@ module.exports = createCoreController('api::product.product',
                     services.push(ms);
                 })
             })
-            console.log('bundle_services', services);
 
             const groupByCategory = services.reduce((group, product) => {
                 const { host } = product.attributes;
@@ -550,13 +538,11 @@ module.exports = createCoreController('api::product.product',
                 return group;
             }, {});
 
-            console.log('groupByCategory', groupByCategory)
 
 
             page.on('console', async (msg) => {
                 const msgArgs = msg.args();
                 for (let i = 0; i < msgArgs.length; ++i) {
-                    console.log(await msgArgs[i].jsonValue());
                 }
             });
 
@@ -597,11 +583,8 @@ module.exports = createCoreController('api::product.product',
             ctx.send(a);
             a.on('close', async () => {
                 try {
-                    console.log('end')
                     await page.close();
-                    console.log('end1')
                     await browser.close();
-                    console.log('end2')
                 } catch (e) {
 
                 }
