@@ -19,6 +19,7 @@
     "dayjs": "^1.11.7",
     "moment": "^2.29.4",
     "puppeteer": "^19.4.1",
+    "strapi-middleware-cache": "^2.1.8",
     "strapi-plugin-populate-deep": "^1.1.2"
   },
   "author": {
