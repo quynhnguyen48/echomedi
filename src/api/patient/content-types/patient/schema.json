@@ -32,6 +32,9 @@
     },
     "email": {
       "type": "string"
+    },
+    "full_name_i": {
+      "type": "string"
     }
   }
 }
