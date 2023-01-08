@@ -40,7 +40,7 @@ module.exports = createCoreController('api::package.package',
         async contact(ctx) {
             const { name, email, phone_number, message } = ctx.request.body;
 
-            const t = `<!DOCTYPE html>
+            const emailTemplate = `<!DOCTYPE html>
             <html>
             <head>
             
