@@ -10,7 +10,7 @@ module.exports = ({ env }) => ({
     config: {
       provider: { name: "redis" },
       strategy: {
-        contentTypes: [{ contentType: "api::service.service", hitpass: false }],
+        contentTypes: [{ contentType: "api::service.service", hitpass: false },{ contentType: "api::service-bundle.service-bundle", hitpass: false }],
         //debug: true,
       },
     },
