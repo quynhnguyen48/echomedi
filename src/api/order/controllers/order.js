@@ -227,7 +227,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       console.log('ERror', e);
     }
 
-    ctx.send({url: vnpUrl, code: order.orderCode});
+    ctx.send({url: vnpUrl, code: orderCode});
   },
   async updateOrder(ctx) {
     // const filter = utils.convertQueryParams(ctx.request.query);
