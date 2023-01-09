@@ -8,10 +8,19 @@ module.exports = ({ env }) => ({
   },
   "rest-cache": {
     config: {
-      provider: { name: "redis" },
+      provider: {
+        name: "memory",
+        options: {
+          max: 32767,
+          maxAge: 3600,
+        },
+      },
       strategy: {
-        contentTypes: [{ contentType: "api::service.service", hitpass: false }],
-        //debug: true,
+        contentTypes: [
+          // list of Content-Types UID to cache
+          "api::service.service",
+          "api::service-bundle.service-bundle",
+        ],
       },
     },
   },
