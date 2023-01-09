@@ -27,6 +27,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::service.service"
+    },
+    "quantity": {
+      "type": "integer"
     }
   }
 }

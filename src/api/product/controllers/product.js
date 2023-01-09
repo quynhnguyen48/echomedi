@@ -53,7 +53,11 @@ module.exports = createCoreController('api::product.product',
 
             await strapi
                 .query('api::cart-line.cart-line')
-                .create({ data: { product: ctx.request.body.product_id, cart: cart.id, publishedAt: new Date().toISOString() } });
+                .create({ data: { 
+                    product: ctx.request.body.product_id, 
+                    quantity: ctx.request.body.quantity,
+                    cart: cart.id, 
+                    publishedAt: new Date().toISOString() } });
 
             ctx.send({ cart_id: cart.id });
         },
