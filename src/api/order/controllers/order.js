@@ -111,7 +111,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     let totalPrice = 0;
     result.cart_lines.forEach(element => {
       try {
-        totalPrice = totalPrice + element.product ? element.product.price : parseInt(element.service.price);
+        totalPrice = totalPrice + (element.product ? element.product.price : parseInt(element.service.price)) * element.quantity;
       } catch (e) {
 
       }
@@ -136,7 +136,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     var returnUrl = "http://echomedi.me/order_detail/?code=" + orderCode;
 
     var createDate = moment().format('YYYYMMDDhhmmss').toString();
-    var amount = "1000000";
+    var amount = totalPrice;
     var bankCode = "";
     
     var orderType = "billpayment";
