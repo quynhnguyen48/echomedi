@@ -1,7 +1,19 @@
 module.exports = ({ env }) => ({
-  wysiwyg: {
-    enabled: true,
-    resolve: "./src/plugins/wysiwyg", // path to plugin folder
+  redis: {
+    config: {
+      connections: {
+        default: { connection: "redis://default:2f7f5236d7134cf29e06e26380f51324@apn1-infinite-raccoon-33666.upstash.io:33666" },
+      },
+    },
+  },
+  "rest-cache": {
+    config: {
+      provider: { name: "redis" },
+      strategy: {
+        contentTypes: [{ contentType: "api::service.service", hitpass: false }],
+        //debug: true,
+      },
+    },
   },
   email: {
     config: {
