@@ -31,15 +31,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       }
     });
 
-    let transporter = nodemailer.createTransport({
-      host: "smtp.hostinger.com",
-      port: 465,
-      secure: true, // true for 465, false for other ports
-      auth: {
-        user: "noreply@echomedi.com", // generated ethereal user
-        pass: "1026Echomedi@123", // generated ethereal password
-      },
-    });
+    
 
 
     ctx.send({ok: true});
@@ -111,6 +103,15 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       }
     });
 
+    let transporter = nodemailer.createTransport({
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: "noreply@echomedi.com", // generated ethereal user
+        pass: "1026Echomedi@123", // generated ethereal password
+      },
+    });
 
     let template = `
           <p>Xin chào [NAME]</p>
