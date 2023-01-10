@@ -344,21 +344,26 @@ module.exports = createCoreController('api::package.package',
           },
         });
 
+        let template = `
+              <p>Xin chào [NAME]</p>
+              
+              <p>Chào mừng [NAME] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
+              <p>ECHO MEDI vừa nhận được lời nhắn của bạn qua trang web về gói thành viên [OPTION]. Bộ phận chuyên môn của chúng tôi sẽ nhanh chóng liên lạc và giải quyết thắc mắc của bạn trong thời gian ngắn nhất.</p>
+              <p>Trong lúc đó, bạn có thể xem thêm một số sản phẩm khác của ECHO MEDI qua trang web https://echomedi.com, hoặc gọi số hotline 1900 638 408 nếu cần hỗ trợ gấp</p>
+              
+              <p>Cảm ơn bạn vì đã luôn chăm sóc cho sức khỏe bản thân,</p>
+              <p>ECHO MEDI </p>
+          `;
+
+          template = template.replaceAll("[NAME]", ctx.request.body.name);
+          template = template.replaceAll("[OPTION]", ctx.request.body.option);
+
         let info = await transporter.sendMail({
           from: '<noreply@echomedi.com>', // sender address
-          to: 'inquiry@echomedi.com', // list of receivers
+          to: ctx.request.body.email, // list of receivers
           subject: "ECHO MEDI - Thông Tin Gói Thành Viên", // Subject line
           text: "Xin chào", // plain text body
-          html: `
-            <p>Xin chào [Tên khách hàng]</p>
-            
-            <p>Chào mừng [Tên khách hàng] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
-            <p>ECHO MEDI vừa nhận được lời nhắn của bạn qua trang web về gói thành viên [xxx]. Bộ phận chuyên môn của chúng tôi sẽ nhanh chóng liên lạc và giải quyết thắc mắc của bạn trong thời gian ngắn nhất.</p>
-            <p>Trong lúc đó, bạn có thể xem thêm một số sản phẩm khác của ECHO MEDI qua trang web [xxx], hoặc gọi số hotline [xxx] nếu cần hỗ trợ gấp</p>
-            
-            <p>Cảm ơn bạn vì đã luôn chăm sóc cho sức khỏe bản thân,</p>
-            <p>ECHO MEDI </p>
-        `, // html body
+          html: template, // html body
         });
 
         ctx.send({ok: true});
@@ -440,21 +445,23 @@ module.exports = createCoreController('api::package.package',
           },
         });
 
+        let template = `
+        <p>Xin chào</p>
+        
+        <p>Chào mừng đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
+        <p>Bây giờ, bạn có thể xem thêm về các gói sản phẩm, dịch vụ, của ECHO MEDI qua website https://echomedi.com, và chọn sản phẩm phù hợp nhất với nhu cầu hiện tại của bạn. Chúng tôi sẽ luôn giữ bạn cập nhật với những thông tin chăm sóc sức khỏe hay chương trình và ưu đãi mới, giúp bạn luôn chủ động trong việc bảo vệ sức khỏe toàn diện.</p>
+        <p>Nếu có bất kỳ câu hỏi hoặc ý kiến nào muốn chia sẻ với ECHO MEDI, đừng ngần ngại liên hệ với chúng tôi qua hotline 1900 638 408 hoặc echomedi.com nhé</p>
+        
+        <p>Rất mong được đồng hành cùng bạn trong chặng đường sắp tới,</p>
+        <p>ECHO MEDI </p>
+    `;
+
         let info = await transporter.sendMail({
           from: '<noreply@echomedi.com>', // sender address
           to: ctx.request.body.email, // list of receivers
           subject: "ECHO MEDI- Đăng Ký Nhận Thông Tin ", // Subject line
           text: "Xin chào", // plain text body
-          html: `
-            <p>Xin chào [Tên khách hàng]</p>
-            
-            <p>Chào mừng [Tên khách hàng] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
-            <p>Bây giờ, bạn có thể xem thêm về các gói sản phẩm, dịch vụ, của ECHO MEDI qua website [link], và chọn sản phẩm phù hợp nhất với nhu cầu hiện tại của bạn. Chúng tôi sẽ luôn giữ bạn cập nhật với những thông tin chăm sóc sức khỏe hay chương trình và ưu đãi mới, giúp bạn luôn chủ động trong việc bảo vệ sức khỏe toàn diện.</p>
-            <p>Nếu có bất kỳ câu hỏi hoặc ý kiến nào muốn chia sẻ với ECHO MEDI, đừng ngần ngại liên hệ với chúng tôi qua hotline 1900 638 408 hoặc echomedi.com nhé</p>
-            
-            <p>Rất mong được đồng hành cùng bạn trong chặng đường sắp tới,</p>
-            <p>ECHO MEDI </p>
-        `, // html body
+          html: template, // html body
         });
 
         ctx.send({ok: true});
