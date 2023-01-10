@@ -5,6 +5,7 @@
  */
 
 const { createCoreController } = require("@strapi/strapi").factories;
+const nodemailer = require("nodemailer");
 
 module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
   // wrap a core action, leaving core logic in place
