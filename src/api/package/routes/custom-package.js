@@ -47,6 +47,15 @@ module.exports = {
       },
       {
         method: "POST",
+        path: "/packages/inquiryService",
+        handler: "package.inquiryService",
+        config: {
+          policies: [],
+          prefix: false,
+        }
+      },
+      {
+        method: "POST",
         path: "/packages/emailGift",
         handler: "package.emailGift",
         config: {
