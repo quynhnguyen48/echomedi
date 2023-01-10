@@ -32,11 +32,6 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       }
     });
 
-    
-
-
-    ctx.send({ok: true});
-
     return {bookings};
   },
   async updateBooking(ctx) {
