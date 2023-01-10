@@ -41,28 +41,6 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
       },
     });
 
-    let template = `
-          <p>Xin chào [NAME]</p>
-          
-          <p>Chào mừng [NAME] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
-          <p>ECHO MEDI vừa nhận được lời nhắn của bạn qua trang web về lịch đặt hẹn của bạn.</p>
-          <p>Trong lúc đó, bạn có thể xem thêm một số sản phẩm khác của ECHO MEDI qua trang web https://echomedi.com, hoặc gọi số hotline 1900 638 408 nếu cần hỗ trợ gấp</p>
-          
-          <p>Cảm ơn bạn vì đã luôn chăm sóc cho sức khỏe bản thân,</p>
-          <p>ECHO MEDI </p>
-      `;
-
-      template = template.replaceAll("[NAME]", ctx.request.body.name);
-      // template = template.replaceAll("[OPTION]", ctx.request.body.option);
-      // template = template.replaceAll("[EMAIL_TITLE]", ctx.request.body.email_title);
-
-    await transporter.sendMail({
-      from: '<noreply@echomedi.com>', // sender address
-      to: ctx.request.body.email, // list of receivers
-      subject: "ECHO MEDI - " + ctx.request.body.email_title, // Subject line
-      text: "Xin chào", // plain text body
-      html: template, // html body
-    });
 
     ctx.send({ok: true});
 
@@ -131,6 +109,30 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
         patient: patient.id,
         publishedAt: new Date(),
       }
+    });
+
+
+    let template = `
+          <p>Xin chào [NAME]</p>
+          
+          <p>Chào mừng [NAME] đến với ECHO MEDI. Cảm ơn bạn vì đã luôn quan tâm chăm sóc sức khỏe bản thân, và hơn hết vì đã tin gửi sức khỏe toàn diện cho chúng tôi. </p>
+          <p>ECHO MEDI vừa nhận được lời nhắn của bạn qua trang web về lịch đặt hẹn của bạn.</p>
+          <p>Trong lúc đó, bạn có thể xem thêm một số sản phẩm khác của ECHO MEDI qua trang web https://echomedi.com, hoặc gọi số hotline 1900 638 408 nếu cần hỗ trợ gấp</p>
+          
+          <p>Cảm ơn bạn vì đã luôn chăm sóc cho sức khỏe bản thân,</p>
+          <p>ECHO MEDI </p>
+      `;
+
+      template = template.replaceAll("[NAME]", ctx.request.body.name);
+      // template = template.replaceAll("[OPTION]", ctx.request.body.option);
+      // template = template.replaceAll("[EMAIL_TITLE]", ctx.request.body.email_title);
+
+    await transporter.sendMail({
+      from: '<noreply@echomedi.com>', // sender address
+      to: ctx.request.body.email, // list of receivers
+      subject: "ECHO MEDI - " + ctx.request.body.email_title, // Subject line
+      text: "Xin chào", // plain text body
+      html: template, // html body
     });
 
     return { booking };
