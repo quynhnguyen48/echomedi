@@ -125,7 +125,7 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
           <p>ECHO MEDI </p>
       `;
 
-      template = template.replaceAll("[NAME]", ctx.request.body.data.name);
+      template = template.replaceAll("[NAME]", ctx.request.body.data.full_name);
       // template = template.replaceAll("[OPTION]", ctx.request.body.option);
       // template = template.replaceAll("[EMAIL_TITLE]", ctx.request.body.email_title);
 
