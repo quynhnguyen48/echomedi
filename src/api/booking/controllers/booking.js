@@ -125,14 +125,14 @@ module.exports = createCoreController("api::booking.booking", ({ strapi }) => ({
           <p>ECHO MEDI </p>
       `;
 
-      template = template.replaceAll("[NAME]", ctx.request.body.name);
+      template = template.replaceAll("[NAME]", ctx.request.body.data.name);
       // template = template.replaceAll("[OPTION]", ctx.request.body.option);
       // template = template.replaceAll("[EMAIL_TITLE]", ctx.request.body.email_title);
 
     await transporter.sendMail({
       from: '<noreply@echomedi.com>', // sender address
-      to: ctx.request.body.email, // list of receivers
-      subject: "ECHO MEDI - " + ctx.request.body.email_title, // Subject line
+      to: ctx.request.body.data.email, // list of receivers
+      subject: "ECHO MEDI - Đặt lịch hẹn", // Subject line
       text: "Xin chào", // plain text body
       html: template, // html body
     });
